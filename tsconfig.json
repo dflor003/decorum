@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "declaration": false,
+    "module": "umd",
+    "noImplicitAny": true,
+    "removeComments": false,
+    "preserveConstEnums": true,
+    "sourceMap": true,
+    "target": "es6",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": false
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}

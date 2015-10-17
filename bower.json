@@ -1,0 +1,35 @@
+{
+  "name": "decorator-validations",
+  "version": "0.0.0",
+  "homepage": "https://github.com/dflor003/decorator-validations",
+  "authors": [
+    "DanilF <dflor003@gmail.com>"
+  ],
+  "description": "ES7 decorator-based validation framework.",
+  "main": "/dist/decorator-validations.js",
+  "moduleType": [
+    "amd",
+    "es6",
+    "globals",
+    "node"
+  ],
+  "keywords": [
+    "validation",
+    "validations",
+    "decorator",
+    "decorators",
+    "es7",
+    "es2016",
+    "ts",
+    "typescript"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    ".gitignore"
+  ]
+}
