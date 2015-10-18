@@ -7,4 +7,5 @@ export {default as MinLength} from './decorators/min-length';
 export {default as Pattern} from './decorators/pattern';
 export {default as Required} from './decorators/required';
 export {default as Validator} from './validator';
+export {default as ModelValidator} from './model-validator';
 export {default as Messages} from './messages';
