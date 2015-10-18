@@ -5,6 +5,10 @@ export default class RequiredFieldValidator extends BaseValidator {
         super('required', message);
     }
 
+    validatesEmptyValue(): boolean {
+        return true;
+    }
+
     getMessage(fieldName: string, fieldValue: any): string {
         return `${fieldName} is required`;
     }

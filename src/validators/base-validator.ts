@@ -19,6 +19,10 @@ abstract class BaseValidator {
         return !!this.message;
     }
 
+    validatesEmptyValue(): boolean {
+        return false;
+    }
+
     getCustomMessage(): string {
         return this.message;
     }

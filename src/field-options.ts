@@ -22,10 +22,15 @@ export default class FieldOptions {
 
     validateValue(value: any, model: any): string[] {
         let errors: string[] = [],
-            fieldName = this.fieldName;
+            fieldName = this.fieldName,
+            isEmpty = !value;
 
         for (let i = 0; i < this.validators.length; i++) {
             let validator = this.validators[i];
+
+            if (!validator.validatesEmptyValue() && isEmpty) {
+                continue;
+            }
 
             if (!validator.isValid(value, model)) {
                 let message = validator.hasCustomMessage

@@ -13,10 +13,6 @@ export default class PatternValidator extends BaseValidator {
     }
 
     isValid(value: any): boolean {
-        if (typeof value !== 'string' || !value.length) {
-            return true;
-        }
-
         return this.pattern.test(value);
     }
 }
