@@ -15,6 +15,10 @@ abstract class BaseValidator {
         this.message = message;
     }
 
+    get hasCustomMessage(): boolean {
+        return !!this.message;
+    }
+
     getCustomMessage(): string {
         return this.message;
     }

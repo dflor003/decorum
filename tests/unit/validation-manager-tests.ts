@@ -1,5 +1,4 @@
 import ValidationManager from '../../src/validation-manager';
-import BaseValidator from '../../src/validators/base-validator';
 import RequiredFieldValidator from '../../src/validators/required';
 
 describe('ValidationManager', () => {

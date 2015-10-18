@@ -38,8 +38,8 @@ export default class LengthValidator extends BaseValidator {
     }
 
     isValid(value: any): boolean {
-        if (typeof value !== 'string') {
-            return false;
+        if (typeof value !== 'string' || !value.length) {
+            return true;
         }
 
         if (this.maxLength && value.length > this.maxLength) {

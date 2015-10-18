@@ -2,6 +2,17 @@ import ValidationManager from './validation-manager';
 import FieldOptions from './field-options';
 import {FieldValidations} from './validation-manager';
 
+export interface IFieldValidationError {
+    field: string;
+    fieldName: string;
+    errors: string[];
+}
+
+export interface IValidationResult {
+    isValid: boolean;
+    errors: IFieldValidationError[];
+}
+
 export default class ModelValidator {
     private validations: FieldValidations;
     private model: any;
@@ -34,12 +45,38 @@ export default class ModelValidator {
         return fieldValidations;
     }
 
-    getValidationErrors(fieldKey: string, value: any): string[] {
+    validateField(fieldKey: string, proposedValue?: any): string[] {
         let fieldValidations = this.getValidationOptions(fieldKey);
         if (!fieldValidations) {
             return [];
         }
 
+        let value = arguments.length < 2 ? this.model[fieldKey] : proposedValue;
+
         return fieldValidations.validateValue(value, this.model);
+    }
+
+    validate(): IValidationResult {
+        let validations = this.validations,
+            result = <IValidationResult>{
+                isValid: true,
+                errors: []
+            };
+
+        for (let fieldKey in validations) {
+            if (validations.hasOwnProperty(fieldKey)) {
+                let errors = this.validateField(fieldKey);
+                if (errors.length) {
+                    result.isValid = false;
+                    result.errors.push(<IFieldValidationError>{
+                        field: fieldKey,
+                        fieldName: this.getValidationOptions(fieldKey).getFieldName(),
+                        errors: errors
+                    });
+                }
+            }
+        }
+
+        return result;
     }
 }

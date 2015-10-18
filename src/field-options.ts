@@ -23,9 +23,14 @@ export default class FieldOptions {
     validateValue(value: any, model: any): string[] {
         let errors: string[] = [],
             fieldName = this.fieldName;
-        for (let validator of this.validators) {
+
+        for (let i = 0; i < this.validators.length; i++) {
+            let validator = this.validators[i];
+
             if (!validator.isValid(value, model)) {
-                let message = validator.getMessage(fieldName, value);
+                let message = validator.hasCustomMessage
+                    ? validator.getCustomMessage()
+                    : validator.getMessage(fieldName, value);
                 errors.push(message);
             }
         }
