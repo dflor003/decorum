@@ -1,5 +1,6 @@
 import {Required} from '../../../src/main';
 import {Email} from '../../../src/main';
+import {MinLength} from '../../../src/main';
 import {MaxLength} from '../../../src/main';
 import {Length} from '../../../src/main';
 import {FieldName} from '../../../src/main';
@@ -20,7 +21,8 @@ describe('ES7 Decorator-based validations', () => {
         email = '';
 
         @FieldName('Password')
-        @Length(10, 30)
+        @MinLength(10)
+        @MaxLength(30)
         password = '';
 
         @FieldName('Confirm password')
@@ -128,7 +130,7 @@ describe('ES7 Decorator-based validations', () => {
                 expect(errors[0].field).toBe('email');
                 expect(errors[0].errors[0]).toBe('Email address is not a valid email address');
                 expect(errors[1].field).toBe('password');
-                expect(errors[1].errors[0]).toBe('Password must be between 10 and 30 characters long');
+                expect(errors[1].errors[0]).toBe('Password must be at least 10 characters long');
                 expect(errors[2].field).toBe('confirmPassword');
                 expect(errors[2].errors[0]).toBe('Passwords must match');
             });
@@ -196,7 +198,7 @@ describe('ES7 Decorator-based validations', () => {
             });
         });
 
-        describe('When @Length decorator on field', () => {
+        describe('When @MinLength decorator on field', () => {
             describe('And length is less than min', () => {
                 it('Should return an error', () => {
                     // Arrange
@@ -207,10 +209,25 @@ describe('ES7 Decorator-based validations', () => {
 
                     // Assert
                     expect(errors.length).toBe(1);
-                    expect(errors[0]).toBe('Password must be between 10 and 30 characters long');
+                    expect(errors[0]).toBe('Password must be at least 10 characters long');
                 });
             });
 
+            describe('And length is greater or equal to min', () => {
+                it('Should not return an error', () => {
+                    // Arrange
+                    model.password = '1234567890';
+
+                    // Act
+                    let errors = validator.validateField('password');
+
+                    // Assert
+                    expect(errors.length).toBe(0);
+                });
+            });
+        });
+
+        describe('When @MaxLength decorator on field', () => {
             describe('And length is greater than max', () => {
                 it('Should return an error', () => {
                     // Arrange
@@ -224,11 +241,11 @@ describe('ES7 Decorator-based validations', () => {
 
                     // Assert
                     expect(errors.length).toBe(1);
-                    expect(errors[0]).toBe('Password must be between 10 and 30 characters long');
+                    expect(errors[0]).toBe('Password can not exceed 30 characters in length');
                 });
             });
 
-            describe('And length is in range', () => {
+            describe('And length is less than or equal to max', () => {
                 it('Should not return an error', () => {
                     // Arrange
                     model.password = '1234567890';
