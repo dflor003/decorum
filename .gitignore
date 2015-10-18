@@ -5,6 +5,9 @@ node_modules
 # Webstorm project files
 .idea
 
+# Test coverage reports
+/coverage
+
 # TypeScript compiled files
 /src/**/*.js
 /src/**/*.js.map

@@ -45,7 +45,6 @@ describe('ES5 Validations', () => {
 
                 // Act
                 let results = Validator.validate(model);
-                console.log(model);
 
                 // Assert
                 expect(results.isValid).toBe(false);

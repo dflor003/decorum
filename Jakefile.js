@@ -12,11 +12,56 @@ task('compile', [], () => {
     let projectPath = path.join('.');
 
     banner('Compiling TypeScript Files');
-    compileTypeScript({ tsConfigPath: projectPath })
+    compileTypeScript({tsConfigPath: projectPath})
         .then(() => log('Done compiling TypeScript files!'))
         .catch(() => error('Failed to compile TypeScript files!'))
         .finally(() => complete());
-}, { async: true });
+}, {async: true});
+
+desc('Runs Karma test runner once and reports to command line');
+task('test', [], () => {
+    let args = {
+        watch: false,
+        browsers: [], // Use defaults from karma.conf.js
+        coverage: false,
+    };
+
+    banner('Starting Karma Test Runner')
+    karma(args)
+        .then(() => log('Karma tests finished!'))
+        .catch((err) => error(`Error occurred running Karma:\n${err}`))
+        .finally(() => complete());
+}, {async: true});
+
+desc('Runs Karma test runner in "watch" mode. Will automatically re-run tests when a file changes.');
+task('test-watch', [], () => {
+    let args = {
+        watch: true,
+        browsers: [], // Use defaults from karma.conf.js
+        coverage: false,
+    };
+
+    banner('Starting Karma Test Runner')
+    karma(args)
+        .then(() => log('Karma tests finished!'))
+        .catch((err) => error(`Error occurred running Karma:\n${err}`))
+        .finally(() => complete());
+}, {async: true});
+
+desc('Runs Karma to generate test coverage reports under the ./coverage folder');
+task('test-coverage', [], () => {
+    let args = {
+        watch: false,
+        browsers: [], // Use defaults from karma.conf.js
+        coverage: true,
+    };
+
+    banner('Starting Karma Test Runner')
+    karma(args)
+        .then(() => log('Karma tests finished!'))
+        .catch((err) => error(`Error occurred running Karma:\n${err}`))
+        .finally(() => complete());
+}, {async: true});
 
 /* Helpers */
 function log() {
@@ -33,12 +78,38 @@ function error() {
     jake.logger.error.apply(jake.logger, arguments);
 }
 
+function karma(args) {
+    args = args || {};
+    let watch = typeof args.watch === 'boolean' ? args.watch : true;
+    let browsers = args.browsers || [];
+    let coverage = typeof args.coverage === 'boolean' ? args.coverage : false;
+
+    let karmaPath = path.join('karma');
+    let cmdParams = [];
+
+    if (watch === false || coverage === true) {
+        cmdParams.push('--single-run');
+    }
+
+    if (browsers && browsers.length) {
+        cmdParams.push(`--browsers ${browsers.join(',')}`);
+    }
+
+    if (coverage === true) {
+        cmdParams.push('--reporters mocha,coverage');
+    }
+
+    return run.apply(null, [karmaPath, 'start'].concat(cmdParams));
+}
+
 function compileTypeScript(args) {
     // Error checks
     if (!args) {
         throw new Error('No args passed');
     }
-    return run(path.join('node_modules', '.bin', 'tsc'), `--project ${args.tsConfigPath}`);
+
+    var tsc = path.join('node_modules', '.bin', 'tsc');
+    return run(tsc, `--project ${args.tsConfigPath}`);
 }
 
 function run(cmd) {

@@ -27,7 +27,16 @@ module.exports = function (config) {
 
         browserify: {
             debug: true,
-            transform: [ ['babelify', { stage: 0 }] ]
+            transform: [ ['babelify', { stage: 0 }], 'browserify-istanbul' ]
+        },
+
+        coverageReporter: {
+            dir: './coverage/',
+            reporters: [
+                { type: 'html', subdir: 'html/' },
+                { type: 'lcov', subdir: '.' },
+                { type: 'text-summary' }
+            ]
         },
 
         // test results reporter to use

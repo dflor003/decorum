@@ -4,7 +4,8 @@
   "description": "An ES7 decorator-based validation framework",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "postinstall": "npm link typescript",
+    "test": "jake test"
   },
   "repository": {
     "type": "git",
@@ -31,10 +32,13 @@
     "babelify": "^6.3.0",
     "bluebird": "^2.10.2",
     "browserify": "^11.2.0",
+    "browserify-istanbul": "^0.2.1",
+    "istanbul": "gotwarlost/istanbul#source-map",
     "jasmine-core": "^2.3.4",
     "karma": "^0.13.11",
     "karma-browserify": "^4.4.0",
     "karma-chrome-launcher": "^0.2.1",
+    "karma-coverage": "^0.5.2",
     "karma-jasmine": "^0.3.6",
     "karma-jasmine-html-reporter": "^0.1.8",
     "karma-mocha-reporter": "^1.1.1",
