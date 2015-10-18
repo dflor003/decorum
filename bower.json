@@ -1,6 +1,6 @@
 {
   "name": "decorator-validations",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "homepage": "https://github.com/dflor003/decorator-validations",
   "authors": [
     "DanilF <dflor003@gmail.com>"
@@ -25,11 +25,15 @@
   ],
   "license": "MIT",
   "ignore": [
-    "**/.*",
     "node_modules",
     "bower_components",
-    "test",
+    "coverage",
+    "src",
     "tests",
-    ".gitignore"
+    "typings",
+    ".gitignore",
+    "/*.js",
+    "/*.json",
+    "/*.yml"
   ]
 }
