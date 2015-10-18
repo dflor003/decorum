@@ -1,4 +1,9 @@
 import BaseValidator from './base-validator';
+import MessageHandlerMap from '../messages';
+
+MessageHandlerMap['maxlength'] =
+    (fieldName: string, fieldValue: any, maxLength: number) =>
+        `${fieldName} can not exceed ${maxLength} characters in length`;
 
 export default class MaxLengthValidator extends BaseValidator {
     private maxLength: number;
@@ -14,7 +19,7 @@ export default class MaxLengthValidator extends BaseValidator {
     }
 
     getMessage(fieldName: string, fieldValue: any): string {
-        return `${fieldName} can not exceed ${this.maxLength} characters in length`;
+        return MessageHandlerMap['maxlength'](fieldName, fieldValue, this.maxLength);
     }
 
     isValid(value: string): boolean {

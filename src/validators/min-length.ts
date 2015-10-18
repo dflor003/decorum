@@ -1,4 +1,9 @@
 import BaseValidator from './base-validator';
+import MessageHandlerMap from '../messages';
+
+MessageHandlerMap['minlength'] =
+    (fieldName: string, fieldValue: any, minLength: number) =>
+        `${fieldName} must be at least ${minLength} characters long`;
 
 export default class MinLengthValidator extends BaseValidator {
     private minLength: number;
@@ -14,7 +19,7 @@ export default class MinLengthValidator extends BaseValidator {
     }
 
     getMessage(fieldName: string, fieldValue: any): string {
-        return `${fieldName} must be at least ${this.minLength} characters long`;
+        return MessageHandlerMap['minlength'](fieldName,  fieldValue, this.minLength);
     }
 
     isValid(value: string): boolean {

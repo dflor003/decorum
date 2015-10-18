@@ -1,4 +1,9 @@
 import BaseValidator from './base-validator';
+import MessageHandlerMap from '../messages';
+
+MessageHandlerMap['required'] =
+    (fieldName: string, fieldValue: any) =>
+        `${fieldName} is required`;
 
 export default class RequiredFieldValidator extends BaseValidator {
     constructor(message?: string) {
@@ -10,7 +15,7 @@ export default class RequiredFieldValidator extends BaseValidator {
     }
 
     getMessage(fieldName: string, fieldValue: any): string {
-        return `${fieldName} is required`;
+        return MessageHandlerMap['required'](fieldName, fieldValue);
     }
 
     isValid(value: any): boolean {
