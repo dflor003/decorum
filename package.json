@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "postinstall": "npm link typescript",
-    "test": "jake test"
+    "test": "jake compile test"
   },
   "repository": {
     "type": "git",
@@ -34,6 +34,7 @@
     "browserify": "^11.2.0",
     "browserify-istanbul": "^0.2.1",
     "istanbul": "gotwarlost/istanbul#source-map",
+    "jake": "^8.0.12",
     "jasmine-core": "^2.3.4",
     "karma": "^0.13.11",
     "karma-browserify": "^4.4.0",
