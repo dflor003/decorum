@@ -1,7 +1,7 @@
 'use strict';
 
 let path = require('path');
-let Promise = require('bluebird')
+let Promise = require('bluebird');
 
 /* Tasks */
 desc('Default task (compiles TS)');
