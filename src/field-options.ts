@@ -1,11 +1,8 @@
-import BaseValidator from "./validators/base-validator";
+import BaseValidator from './validators/base-validator';
 
 export default class FieldOptions {
     private fieldName: string = 'Field';
     private validators: BaseValidator[] = [];
-
-    constructor() {
-    }
 
     getFieldName(): string {
         return this.fieldName;
@@ -24,9 +21,9 @@ export default class FieldOptions {
     }
 
     validateValue(value: any, model: any): string[] {
-        var errors: string[] = [],
+        let errors: string[] = [],
             fieldName = this.fieldName;
-        for(var validator of this.validators) {
+        for (let validator of this.validators) {
             if (!validator.isValid(value, model)) {
                 let message = validator.getMessage(fieldName, value);
                 errors.push(message);

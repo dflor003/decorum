@@ -1,4 +1,4 @@
-import BaseValidator from "./base-validator";
+import BaseValidator from './base-validator';
 
 export default class CustomValidator<TModel> extends BaseValidator {
     private static CustomValidatorCount = 0;

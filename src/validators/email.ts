@@ -1,4 +1,4 @@
-import PatternValidator from "./pattern";
+import PatternValidator from './pattern';
 
 export default class EmailValidator extends PatternValidator {
     static EmailRegex = /^[a-z0-9!#$%&'*+/=?^_`{|}~.-]+@[a-z0-9-]+(\.[a-z0-9-]+)*$/i;

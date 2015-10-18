@@ -1,8 +1,8 @@
-import ValidationManager from "./validation-manager";
-import FieldOptions from "./field-options";
-import {FieldValidations} from "./validation-manager";
+import ValidationManager from './validation-manager';
+import FieldOptions from './field-options';
+import {FieldValidations} from './validation-manager';
 
-export default class Validator {
+export default class ModelValidator {
     private validations: FieldValidations;
     private model: any;
 
@@ -19,13 +19,13 @@ export default class Validator {
             throw new Error('Could not find prototype of model');
         }
 
-        var validationManager = ValidationManager.get(model.constructor.prototype);
+        let validationManager = ValidationManager.get(model.constructor.prototype);
         this.validations = validationManager.getValidations();
         this.model = model;
     }
 
     getValidationOptions(fieldKey: string): FieldOptions {
-        var fieldValidations = this.validations[fieldKey];
+        let fieldValidations = this.validations[fieldKey];
         if (!fieldValidations) {
             console.warn(`Validation attempted for field ${fieldKey}, but it was not setup`);
             return null;
@@ -35,7 +35,7 @@ export default class Validator {
     }
 
     getValidationErrors(fieldKey: string, value: any): string[] {
-        var fieldValidations = this.getValidationOptions(fieldKey);
+        let fieldValidations = this.getValidationOptions(fieldKey);
         if (!fieldValidations) {
             return [];
         }

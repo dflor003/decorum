@@ -1,4 +1,4 @@
-import BaseValidator from "./base-validator";
+import BaseValidator from './base-validator';
 
 export default class LengthValidator extends BaseValidator {
     private minLength: number;

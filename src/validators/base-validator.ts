@@ -5,7 +5,7 @@ abstract class BaseValidator {
 
     constructor(validatorKey: string, message: string) {
         if (!validatorKey) {
-            throw new Error('Must pass validator key.')
+            throw new Error('Must pass validator key.');
         }
         if (!BaseValidator.KeyRegex.test(validatorKey)) {
             throw new Error('Validator key must be a valid JS property name');

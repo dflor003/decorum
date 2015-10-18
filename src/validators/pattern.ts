@@ -1,4 +1,4 @@
-import BaseValidator from "./base-validator";
+import BaseValidator from './base-validator';
 
 export default class PatternValidator extends BaseValidator {
     private pattern: RegExp;

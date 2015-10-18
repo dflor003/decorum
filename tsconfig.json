@@ -1,8 +1,7 @@
 {
   "compilerOptions": {
     "declaration": false,
-    "module": "umd",
-    "noImplicitAny": true,
+    "noImplicitAny": false,
     "removeComments": false,
     "preserveConstEnums": true,
     "sourceMap": true,
@@ -11,6 +10,7 @@
     "emitDecoratorMetadata": false
   },
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "Jakefile.ts"
   ]
 }
