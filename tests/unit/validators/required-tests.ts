@@ -7,7 +7,7 @@ describe('Required validator', () => {
 
     describe('isValid', () => {
         describe('When the field is an empty string', () => {
-            it('Should return an error', () => {
+            it('Should be invalid', () => {
                 // Act
                 let valid = validator.isValid('');
 
@@ -17,7 +17,7 @@ describe('Required validator', () => {
         });
 
         describe('When field is whitespace', () => {
-            it('Should return an error', () => {
+            it('Should be invalid', () => {
                 // Act
                 let valid = validator.isValid('     ');
 
@@ -27,7 +27,7 @@ describe('Required validator', () => {
         });
 
         describe('When field is null', () => {
-            it('Should return an error', () => {
+            it('Should be invalid', () => {
                 // Act
                 let valid = validator.isValid(null);
 
@@ -37,7 +37,7 @@ describe('Required validator', () => {
         });
 
         describe('When field is undefined', () => {
-            it('Should return an error', () => {
+            it('Should be invalid', () => {
                 // Act
                 let valid = validator.isValid(null);
 
@@ -47,7 +47,7 @@ describe('Required validator', () => {
         });
 
         describe('When field is not empty', () => {
-            it('Should not return an error', () => {
+            it('Should be valid', () => {
                 // Act
                 let valid = validator.isValid('some value');
 

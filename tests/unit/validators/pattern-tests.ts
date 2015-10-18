@@ -7,7 +7,7 @@ describe('Pattern validator', () => {
 
     describe('isValid', () => {
         describe('When the field does not match the pattern', () => {
-            it('Should return an error', () => {
+            it('Should be invalid', () => {
                 // Act
                 let valid = validator.isValid('123A4');
 
@@ -17,7 +17,7 @@ describe('Pattern validator', () => {
         });
 
         describe('When field matches the pattern', () => {
-            it('Should not return an error', () => {
+            it('Should be valid', () => {
                 // Act
                 let valid = validator.isValid('42');
 

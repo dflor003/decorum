@@ -7,7 +7,7 @@ describe('Length validator', () => {
 
     describe('isValid', () => {
         describe('When the field length is greater than the max length', () => {
-            it('Should return an error', () => {
+            it('Should be invalid', () => {
                 // Act
                 let valid = validator.isValid('12345');
 
@@ -17,7 +17,7 @@ describe('Length validator', () => {
         });
 
         describe('When field length is equal to the max length', () => {
-            it('Should not return an error', () => {
+            it('Should be valid', () => {
                 // Act
                 let valid = validator.isValid('1234');
 
@@ -27,7 +27,7 @@ describe('Length validator', () => {
         });
 
         describe('When field length is less than the max length', () => {
-            it('Should not return an error', () => {
+            it('Should be valid', () => {
                 // Act
                 let valid = validator.isValid('123');
 

@@ -7,7 +7,7 @@ describe('MinLength validator', () => {
 
     describe('isValid', () => {
         describe('When the field length is less than the min length', () => {
-            it('Should return an error', () => {
+            it('Should be invalid', () => {
                 // Act
                 let valid = validator.isValid('12');
 
@@ -17,7 +17,7 @@ describe('MinLength validator', () => {
         });
 
         describe('When field length is equal to the min length', () => {
-            it('Should not return an error', () => {
+            it('Should be valid', () => {
                 // Act
                 let valid = validator.isValid('123');
 
@@ -27,7 +27,7 @@ describe('MinLength validator', () => {
         });
 
         describe('When field length is greater than the min length', () => {
-            it('Should not return an error', () => {
+            it('Should be invalid', () => {
                 // Act
                 let valid = validator.isValid('1234');
 

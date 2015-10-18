@@ -7,7 +7,7 @@ describe('Email validator', () => {
 
     describe('isValid', () => {
         describe('When the field is not a valid email address', () => {
-            it('Should return an error', () => {
+            it('Should be invalid', () => {
                 // Act
                 let valid = validator.isValid('foo@b.');
 
@@ -17,7 +17,7 @@ describe('Email validator', () => {
         });
 
         describe('When field is a valid email', () => {
-            it('Should not return an error', () => {
+            it('Should be valid', () => {
                 // Act
                 let valid = validator.isValid('bob@gmail.com');
 
