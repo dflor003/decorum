@@ -13,12 +13,23 @@ let del = require('del');
 let path = require('path');
 let karma = require('karma');
 let runSequence = require('run-sequence');
+let coveralls = require('gulp-coveralls');
 
 /* Tasks */
 gulp.task('default', (done) => {
     return runSequence(
         'build',
         'test',
+        done
+    );
+});
+
+gulp.task('ci', (done) => {
+    return runSequence(
+        'build',
+        'test',
+        'test-coverage',
+        'publish-test-coverage',
         done
     );
 });
@@ -63,6 +74,11 @@ gulp.task('test-coverage', (done) => {
         singleRun: true
     }, done);
     server.start();
+});
+
+gulp.task('publish-test-coverage', ['test-coverage'], () => {
+    gulp.src('./coverage/**/lcov.info')
+        .pipe(coveralls());
 });
 
 gulp.task('publish', () => {
