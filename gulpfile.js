@@ -12,11 +12,18 @@ let gutil = require('gulp-util');
 let del = require('del');
 let path = require('path');
 let karma = require('karma');
+let runSequence = require('run-sequence');
 
 /* Tasks */
-gulp.task('default', ['compile']);
+gulp.task('default', (done) => {
+    return runSequence(
+        'build',
+        'test',
+        done
+    );
+});
 
-gulp.task('compile', () => {
+gulp.task('build', () => {
     banner('Compiling TypeScript Files');
 
     let projectPath = path.join('.', 'tsconfig.json');

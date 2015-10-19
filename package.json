@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "postinstall": "npm link typescript",
-    "test": "gulp compile test"
+    "test": "gulp"
   },
   "repository": {
     "type": "git",
@@ -50,6 +50,7 @@
     "karma-mocha-reporter": "^1.1.1",
     "karma-phantomjs-launcher": "^0.2.1",
     "phantomjs": "^1.9.18",
+    "run-sequence": "^1.1.4",
     "through2": "^2.0.0",
     "tsify": "^0.12.2",
     "tslint": "^2.5.1",
