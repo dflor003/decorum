@@ -27,7 +27,6 @@ gulp.task('default', (done) => {
 gulp.task('ci', (done) => {
     return runSequence(
         'build',
-        'test',
         'test-coverage',
         'publish-test-coverage',
         done
