@@ -7,8 +7,13 @@ cache:
   directories:
     - node_modules
 
+before_install:
+  - npm install -g typescript@1.6.2
+  - npm install -g tsd@next
+
 install:
   # Disable the spinner, it looks bad on Travis
   - npm config set spin false
-  # Install npm dependencies
+  # Install dependencies
   - npm install
+  - tsd install

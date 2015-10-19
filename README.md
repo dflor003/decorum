@@ -1,4 +1,4 @@
-ES7 Decorator Validations
+ES7 Decorator Validations [![Build Status](https://travis-ci.org/dflor003/decorator-validations.svg?branch=master)](https://travis-ci.org/dflor003/decorator-validations)
 =========
 
 Are you fed up with having to solve the simple but tedious problem of client-side/server-side JavaScript validations over and over again? Then this library is for you!

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "postinstall": "npm link typescript",
-    "test": "jake compile test"
+    "test": "gulp compile test"
   },
   "repository": {
     "type": "git",
@@ -40,7 +40,6 @@
     "gulp-typescript": "^2.9.2",
     "gulp-util": "^3.0.6",
     "istanbul": "gotwarlost/istanbul#source-map",
-    "jake": "^8.0.12",
     "jasmine-core": "^2.3.4",
     "karma": "^0.13.11",
     "karma-browserify": "^4.4.0",

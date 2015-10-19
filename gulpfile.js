@@ -10,17 +10,55 @@ let dts = require('dts-bundle');
 let Promise = require('bluebird');
 let gutil = require('gulp-util');
 let del = require('del');
+let path = require('path');
+let karma = require('karma');
 
-function log() {
-    gutil.log.apply(gutil.log, arguments);
-}
+/* Tasks */
+gulp.task('default', ['compile']);
 
-function error() {
-    let args = Array.prototype.slice.call(arguments, 0).map(arg => gutil.colors.bold.red(arg));
-    log.apply(null, args);
-}
+gulp.task('compile', () => {
+    banner('Compiling TypeScript Files');
 
-gulp.task('publish', function () {
+    let projectPath = path.join('.', 'tsconfig.json');
+    let project = ts.createProject(projectPath);
+    let result = project.src().pipe(ts(project));
+
+    return asPromise(result.js.pipe(gulp.dest('.')))
+        .then(() => log('Done compiling TypeScript files!'))
+        .catch(() => error('Failed to compile TypeScript files!'));
+});
+
+gulp.task('test', (done) => {
+    banner('Running Karma Tests');
+
+    let server = new karma.Server({
+        configFile: path.join(__dirname, 'karma.conf.js'),
+        singleRun: true
+    }, done);
+    server.start();
+});
+
+gulp.task('test-watch', (done) => {
+    banner('Starting Karma Test Server');
+
+    let server = new karma.Server({
+        configFile: path.join(__dirname, 'karma.conf.js')
+    }, done);
+    server.start();
+});
+
+gulp.task('test-coverage', (done) => {
+    banner('Running Karma Test Coverage');
+
+    let server = new karma.Server({
+        configFile: path.join(__dirname, 'karma.conf.js'),
+        reporters: ['mocha', 'coverage'],
+        singleRun: true
+    }, done);
+    server.start();
+});
+
+gulp.task('publish', () => {
     var bundledFileName = 'decorator-validations.js',
         sourceMapFileName = './dist/' + bundledFileName + '.map',
         globalNamespace = 'lib.validations';
@@ -38,20 +76,15 @@ gulp.task('publish', function () {
 });
 
 gulp.task('typedef', () => {
-    let buildDeclarations = new Promise((resolve, reject) => {
-        log('Generating base TypeScript declarations...');
-        gulp.src('./src/**/*.ts')
-            .pipe(ts({
-                target: 'ES6',
-                declaration: true,
-                noExternalResolve: true
-            })).dts
-            .on('error', reject)
-            .pipe(gulp.dest('./build/dts'))
-            .on('end', resolve);
-    });
-    
-    return buildDeclarations
+    log('Generating base TypeScript declarations...');
+    asPromise(gulp.src('./src/**/*.ts')
+        .pipe(ts({
+            target: 'ES6',
+            declaration: true,
+            noExternalResolve: true,
+            listFiles: true,
+        })).dts
+        .pipe(gulp.dest('./build/dts')))
         .then(() => {
             log('Bundling TypeScript declarations...');
             dts.bundle({
@@ -66,3 +99,28 @@ gulp.task('typedef', () => {
         })
         .catch((err) => error(err));
 });
+
+/* Helpers */
+function log() {
+    gutil.log.apply(gutil.log, arguments);
+}
+
+function error() {
+    let args = Array.prototype.slice.call(arguments, 0).map(arg => gutil.colors.bold.red(arg));
+    log.apply(null, args);
+}
+
+function asPromise(stream) {
+    return new Promise((resolve, reject) => {
+        stream
+            .on('error', reject)
+            .on('end', resolve);
+    });
+}
+
+function banner(message) {
+    log('===========================================================');
+    log(message);
+    log('===========================================================');
+    log('');
+}
