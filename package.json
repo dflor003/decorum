@@ -1,6 +1,6 @@
 {
-  "name": "decorator-validations",
-  "version": "0.0.1",
+  "name": "decorum",
+  "version": "0.1.1-alpha",
   "description": "An ES7 decorator-based validation framework",
   "main": "index.js",
   "scripts": {
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dflor003/decorator-validations.git"
+    "url": "git+https://github.com/dflor003/decorum.git"
   },
   "keywords": [
     "validation",
@@ -20,14 +20,17 @@
     "es7",
     "es2016",
     "typescript",
-    "ts"
+    "ts",
+    "decorum",
+    "library",
+    "babel"
   ],
   "author": "DanilF <dflor003@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/dflor003/decorator-validations/issues"
+    "url": "https://github.com/dflor003/decorum/issues"
   },
-  "homepage": "https://github.com/dflor003/decorator-validations#readme",
+  "homepage": "https://github.com/dflor003/decorum#readme",
   "devDependencies": {
     "babelify": "^6.3.0",
     "bluebird": "^2.10.2",

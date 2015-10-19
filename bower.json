@@ -1,7 +1,7 @@
 {
-  "name": "decorator-validations",
-  "version": "0.1.0-alpha",
-  "homepage": "https://github.com/dflor003/decorator-validations",
+  "name": "decorum",
+  "version": "0.1.1-alpha",
+  "homepage": "https://github.com/dflor003/decorum",
   "authors": [
     "DanilF <dflor003@gmail.com>"
   ],
@@ -16,12 +16,16 @@
   "keywords": [
     "validation",
     "validations",
+    "validator",
     "decorator",
     "decorators",
     "es7",
     "es2016",
+    "typescript",
     "ts",
-    "typescript"
+    "decorum",
+    "library",
+    "babel"
   ],
   "license": "MIT",
   "ignore": [

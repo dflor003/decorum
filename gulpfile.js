@@ -81,9 +81,9 @@ gulp.task('publish-test-coverage', ['test-coverage'], () => {
 });
 
 gulp.task('publish', () => {
-    var bundledFileName = 'decorator-validations.js',
+    var bundledFileName = 'decorum.js',
         sourceMapFileName = './dist/' + bundledFileName + '.map',
-        globalNamespace = 'lib.validations';
+        globalNamespace = 'decorum';
 
     return browserify({
             entries: './src/main.ts',
@@ -110,9 +110,9 @@ gulp.task('typedef', () => {
         .then(() => {
             log('Bundling TypeScript declarations...');
             dts.bundle({
-                name: 'decorator-validations',
+                name: 'decorum',
                 main: './build/dts/main.d.ts',
-                out: '../../dist/decorator-validations.d.ts'
+                out: '../../dist/decorum.d.ts'
             });
         })
         .then(() => {
