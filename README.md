@@ -15,6 +15,7 @@ It's main focus is around taking advantage of the ECMAScript 7 / ECMAScript 2016
 
 # Getting Started
 
+**Client-side:**
 Get the library via bower using the following command:
 
 ```sh
@@ -26,6 +27,10 @@ Add a script tag to your markup referencing the decorum library such as the foll
 ```html
 <script type="text/javascript" src="/bower_components/decorum/dist/decorum.js"></script>
 ```
+
+**Server-side:**
+
+Coming soon!
 
 # Why Model-Based Validations?
 
@@ -43,7 +48,7 @@ With **decorum**, addressing those concerns becomes quite simple and straight fo
 
 ## Supported Validations
 
-TODO
+Coming soon!
 
 ## Language Specifics
 
@@ -162,8 +167,92 @@ class MyModel {
 
 ### ES6 Without Decorators
 
-TODO:
+ES7 features too edgy for you? Reconsider! But until you do... There's still a way to take advantage of decorum.
+
+You can declare ES6 classes and decorate them after the fact by doing the following:
+
+```js
+import {Required, FieldName, Email, Validation, Pattern, MinLength, MaxLength, Validator} from 'decorum';
+
+class MyModel {
+	constructor() {
+		this.username = '';
+		this.email = '';
+		this.password = '';
+		this.confirmPassword = '';
+    }
+}
+
+Validator.decorate(MyModel.prototype, {
+	username: [
+		Required()
+	],
+	email: [
+		Fieldname('Email address'),
+		Required(),
+		Email()
+	],
+	password: [
+		FieldName('Password'),
+		MinLength(10),
+		MaxLength(30)
+	],
+	confirmPassword: [
+		FieldName('ConfirmPassword'),
+		Validation(
+			'Passwords must match',
+			(value, model) => value === model.password
+		)
+	]
+});
+```
 
 ### ES5 Without Decorators
 
-TODO
+ES6 too edgy for you? I'd highly encourage you to begin exploring some of the awesome features of the modern-day JavaScript as soon as possible. 
+
+Until you do, here's something to hold you over:
+
+```js
+(function (decorum) {
+	var Required   = decorum.Required;
+	var FieldName  = decorum.FieldName;
+	var Email      = decorum.Email;
+	var Validation = decorum.Validation;
+	var Pattern    = decorum.Pattern;
+	var MinLength  = decorum.MinLength;
+	var MaxLength  = decorum.MaxLength;
+	var Validator  = decorum.Validator;
+
+	function MyModel() {
+		this.username = '';
+		this.email = '';
+		this.password = '';
+		this.confirmPassword = '';
+	}
+	
+	Validator.decorate(MyModel.prototype, {
+		username: [
+			Required()
+		],
+		email: [
+			Fieldname('Email address'),
+			Required(),
+			Email()
+		],
+		password: [
+			FieldName('Password'),
+			MinLength(10),
+			MaxLength(30)
+		],
+		confirmPassword: [
+			FieldName('ConfirmPassword'),
+			Validation(
+				'Passwords must match',
+				function(value, model) { return value === model.password; }
+			)
+		]
+	});
+
+})(window.decorum);
+```

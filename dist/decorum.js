@@ -241,15 +241,15 @@ var Validator = (function () {
     Validator.new = function (model) {
         return new model_validator_1.default(model);
     };
-    Validator.setValidations = function (objectType, definitions) {
+    Validator.decorate = function (objectType, definitions) {
         if (!objectType) {
-            throw new Error('Validator.setValidations: No class passed!');
+            throw new Error('Validator.decorate: No class passed!');
         }
         if (!objectType.prototype) {
-            throw new Error('Validator.setValidations: First parameter must be a valid class with a prototype!');
+            throw new Error('Validator.decorate: First parameter must be a valid class with a prototype!');
         }
         if (!definitions) {
-            throw new Error('Validator.setValidations: Definitions must be a valid map of field name to validator values');
+            throw new Error('Validator.decorate: Definitions must be a valid map of field name to validator values');
         }
         var prototype = objectType.prototype;
         for (var field in definitions) {

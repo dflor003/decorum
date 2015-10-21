@@ -1,3 +1,5 @@
+'use strict';
+
 import {Required} from '../../../src/main';
 import {Email} from '../../../src/main';
 import {MaxLength} from '../../../src/main';
@@ -7,8 +9,6 @@ import {Validation} from '../../../src/main';
 import {Pattern} from '../../../src/main';
 import {Validator} from '../../../src/main';
 
-'use strict';
-
 describe('ES6 Validations', () => {
     class Person {
         constructor() {
@@ -17,7 +17,7 @@ describe('ES6 Validations', () => {
         }
     }
 
-    Validator.setValidations(Person, {
+    Validator.decorate(Person, {
         name: [
             Required(),
             MaxLength(30)

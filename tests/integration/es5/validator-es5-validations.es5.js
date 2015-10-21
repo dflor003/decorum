@@ -15,7 +15,7 @@ describe('ES5 Validations', () => {
         this.ssn = '';
     }
 
-    Validator.setValidations(Employee, {
+    Validator.decorate(Employee, {
         name: [
             Required(),
             MinLength(5)

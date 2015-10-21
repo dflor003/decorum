@@ -8,17 +8,17 @@ export default class Validator {
         return new ModelValidator(model);
     }
 
-    static setValidations(objectType: any, definitions: ValidationDefinitions): void {
+    static decorate(objectType: any, definitions: ValidationDefinitions): void {
         if (!objectType) {
-            throw new Error('Validator.setValidations: No class passed!');
+            throw new Error('Validator.decorate: No class passed!');
         }
 
         if (!objectType.prototype) {
-            throw new Error('Validator.setValidations: First parameter must be a valid class with a prototype!');
+            throw new Error('Validator.decorate: First parameter must be a valid class with a prototype!');
         }
 
         if (!definitions) {
-            throw new Error('Validator.setValidations: Definitions must be a valid map of field name to validator values');
+            throw new Error('Validator.decorate: Definitions must be a valid map of field name to validator values');
         }
 
         let prototype = objectType.prototype;
