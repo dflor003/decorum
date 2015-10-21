@@ -54,7 +54,7 @@ declare module '__decorum/validator' {
     };
     export default class Validator {
         static new(model: any): ModelValidator;
-        static setValidations(objectType: any, definitions: ValidationDefinitions): void;
+        static decorate(objectType: any, definitions: ValidationDefinitions): void;
         static validate(model: any): IValidationResult;
     }
 }
