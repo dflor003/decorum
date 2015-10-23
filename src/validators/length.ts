@@ -5,6 +5,9 @@ MessageHandlerMap['length'] =
     (fieldName: string, fieldValue: any, length: number) =>
         `${fieldName} must be ${length} characters long.`;
 
+/**
+ * An exact length validator.
+ */
 export default class LengthValidator extends BaseValidator {
     private length: number;
 

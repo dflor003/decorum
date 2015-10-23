@@ -5,6 +5,9 @@ MessageHandlerMap['minlength'] =
     (fieldName: string, fieldValue: any, minLength: number) =>
         `${fieldName} must be at least ${minLength} characters long`;
 
+/**
+ * A minimum length validator.
+ */
 export default class MinLengthValidator extends BaseValidator {
     private minLength: number;
 

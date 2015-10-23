@@ -5,6 +5,9 @@ MessageHandlerMap['required'] =
     (fieldName: string, fieldValue: any) =>
         `${fieldName} is required`;
 
+/**
+ * A field requiredness validator.
+ */
 export default class RequiredFieldValidator extends BaseValidator {
     constructor(message?: string) {
         super('required', message);

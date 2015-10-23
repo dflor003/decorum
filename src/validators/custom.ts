@@ -1,5 +1,8 @@
 import BaseValidator from './base-validator';
 
+/**
+ * Custom validation class.
+ */
 export default class CustomValidator<TModel> extends BaseValidator {
     private static CustomValidatorCount = 0;
     private predicate: (value: any, model: TModel) => boolean;

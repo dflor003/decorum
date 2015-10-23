@@ -5,6 +5,9 @@ MessageHandlerMap['pattern'] =
     (fieldName: string, fieldValue: any, regex: RegExp) =>
         `${fieldName} is not valid`;
 
+/**
+ * A regular expression validator.
+ */
 export default class PatternValidator extends BaseValidator {
     private pattern: RegExp;
 

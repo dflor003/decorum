@@ -5,6 +5,9 @@ MessageHandlerMap['maxlength'] =
     (fieldName: string, fieldValue: any, maxLength: number) =>
         `${fieldName} can not exceed ${maxLength} characters in length`;
 
+/**
+ * A maximum length validator.
+ */
 export default class MaxLengthValidator extends BaseValidator {
     private maxLength: number;
 

@@ -15,98 +15,296 @@ declare module 'decorum' {
 }
 
 declare module '__decorum/decorators/custom-validation' {
+    /**
+      * A generic custom validation. Takes a predicate that will receive the proposed value as the first parameter and the
+      * current model state as the second.
+      * @param message The message to display when the predicate fails.
+      * @param predicate A lambda expression/function that determines if the value is valid. If it returns a falsy value, the
+      * field will be considered invalid and will return the passed error message upon validation.
+      * @returns {function(Object, string): void} A field validation decorator.
+      */
     export default function Validation<TModel>(message: string, predicate: (value: any, model: TModel) => boolean): PropertyDecorator;
 }
 
 declare module '__decorum/decorators/email' {
+    /**
+      * Validate's that the field is a valid email address. The format used is the same as the webkit browser's internal
+      * email validation format. For looser or stricter formats, use your own validation based on the @Pattern decorator.
+      * @param message [Optional] Overrides the default validation error message.
+      * @returns {function(Object, string): void} A field validation decorator.
+      */
     export default function Email(message?: string): PropertyDecorator;
 }
 
 declare module '__decorum/decorators/field-name' {
+    /**
+      * Sets the field's "friendly" name in validation error messages.
+      * @param name The field's friendly name
+      * @returns {function(Object, string): void} A field validation decorator.
+      */
     export default function FieldName(name: string): PropertyDecorator;
 }
 
 declare module '__decorum/decorators/length' {
+    /**
+      * Validate's a field's EXACT length. Validation fails if the field is not EXACTLY the length passed.
+      * @param length The exact length the field must be.
+      * @param message [Optional] Overrides the default validation error message.
+      * @returns {function(Object, string): void} A field validation decorator.
+      */
     export default function Length(length: number, message?: string): PropertyDecorator;
 }
 
 declare module '__decorum/decorators/max-length' {
+    /**
+      * Validates a field's maximum length.
+      * @param maxLength The field's maximum length. Must be a positive integer greater than 1.
+      * @param message [Optional] Overrides the default validation error message.
+      * @returns {function(Object, string): void} A field validation decorator.
+      */
     export default function MaxLength(maxLength: number, message?: string): PropertyDecorator;
 }
 
 declare module '__decorum/decorators/min-length' {
+    /**
+      * Validates the field's minimum length.
+      * @param minLength The field's minimum length. Must be a positive integer greater than 0
+      * @param message [Optional] Overrides the default validation error message.
+      * @returns {function(Object, string): void} A field validation decorator.
+      */
     export default function MinLength(minLength: number, message?: string): PropertyDecorator;
 }
 
 declare module '__decorum/decorators/pattern' {
+    /**
+      * Validates the field against a regular expression pattern.
+      * @param regex The regex to validate against. Should be a valid JavaScript {RegExp} instance.
+      * @param message [Optional] Overrides the default validation error message.
+      * @returns {function(Object, string): void} A field validation decorator.
+      */
     export default function Pattern(regex: RegExp, message?: string): PropertyDecorator;
 }
 
 declare module '__decorum/decorators/required' {
+    /**
+      * Marks the field as required.
+      * @param message [Optional] Overrides the default validation error message.
+      * @returns {function(Object, string): void} A field validation decorator.
+      */
     export default function Required(message?: string): PropertyDecorator;
 }
 
 declare module '__decorum/validator' {
     import ModelValidator from '__decorum/model-validator';
     import { IValidationResult } from '__decorum/model-validator';
+    /**
+        * A map from field name to array of field validation decorators.
+        */
     export type ValidationDefinitions = {
-        [field: string]: PropertyDecorator[];
+            [field: string]: PropertyDecorator[];
     };
+    /**
+        * Static container for convenience methods related to field validation.
+        */
     export default class Validator {
-        static new(model: any): ModelValidator;
-        static decorate(objectType: any, definitions: ValidationDefinitions): void;
-        static validate(model: any): IValidationResult;
+            /**
+                * Creates a new model validator for the given model. Model should be a valid class that has a valid constructor
+                * and a prototype.
+                * @param model The model to create the validator for.
+                * @returns {ModelValidator} An instance of {ModelValidator}
+                */
+            static new(model: any): ModelValidator;
+            /**
+                * Decorates the passed class with model validations. Use this when you do not have access to ES7 decorators.
+                * The object passed should be a valid class (ES6 class or ES5 function constructor).
+                * @param objectType The class to decorate.
+                * @param definitions One or more field validation definitions of the form { "fieldName": [ decorators ] }.
+                */
+            static decorate(objectType: any, definitions: ValidationDefinitions): void;
+            /**
+                * Creates an anonymous validator, immediately validates the model, and returns any validation errors on the model
+                * as a result.
+                * @param model The model to validate.
+                */
+            static validate(model: any): IValidationResult;
     }
 }
 
 declare module '__decorum/model-validator' {
     import FieldOptions from '__decorum/field-options';
+    /**
+        * Details about validation errors on a field.
+        */
     export interface IFieldValidationError {
-        field: string;
-        fieldName: string;
-        errors: string[];
+            /**
+                * The property name of the field on the model.
+                */
+            field: string;
+            /**
+                * The "friendly" name of the field. If not set on the model via @FieldName(...), it will default to "Field".
+                */
+            fieldName: string;
+            /**
+                * One or more field validation errors. Empty if no errors.
+                */
+            errors: string[];
     }
+    /**
+        * Result returned when a model is validated.
+        */
     export interface IValidationResult {
-        isValid: boolean;
-        errors: IFieldValidationError[];
+            /**
+                * Whether or not the model is valid.
+                */
+            isValid: boolean;
+            /**
+                * A map of field name to validation errors.
+                */
+            errors: IFieldValidationError[];
     }
+    /**
+        * Wraps a model to allow the consuming class to call validation methods.
+        */
     export default class ModelValidator {
-        constructor(model: any);
-        getValidationOptions(fieldKey: string): FieldOptions;
-        validateField(fieldKey: string, proposedValue?: any): string[];
-        validate(): IValidationResult;
+            /**
+                * Creates a new model validator.
+                * @param model The model to validate. Should be a class that has a valid constructor function and prototype.
+                */
+            constructor(model: any);
+            /**
+                * Gets the validation options for the given field name.
+                * @param fieldKey         The name of the field to get options for.
+                * @returns {FieldOptions} The field options associated with that field or null if no validations defined
+                * for the field.
+                */
+            getValidationOptions(fieldKey: string): FieldOptions;
+            /**
+                * Validates the given field on this {ModelValidator}'s model. If a proposed value is passed, validate
+                * against that passed value; otherwise, use the field's current value on the model.
+                * @param fieldKey      The name of the field to validate.
+                * @param proposedValue [Optional] The proposed value to set on the field.
+                * @returns {string[]}  An array of field validation error messages if the field is invalid; otherwise,
+                * an empty array.
+                */
+            validateField(fieldKey: string, proposedValue?: any): string[];
+            /**
+                * Validate the entire model and return a result that indicates whether the model is valid or not and any errors
+                * that have occurred in an object indexed by field name on the model.
+                * @returns {IValidationResult} An object that contains whether the model is valid or not and errors by field name.
+                */
+            validate(): IValidationResult;
     }
 }
 
 declare module '__decorum/messages' {
+    /**
+        * Callback invoked when a validation needs to return an error. Parameters include field name,
+        * field value, and any other properties relating to the field validation itself.
+        */
     export type MessageHandler = (fieldName: string, fieldValue: any, ...args: any[]) => string;
+    /**
+        * A map of validation "key" (unique name for a given type of validation) to message handler callback.
+        */
     export interface IMessageHandlerMap {
-        [key: string]: MessageHandler;
+            [key: string]: MessageHandler;
     }
+    /**
+        * Mechanism for overriding validation errors to provide for custom or localized error messages.
+        * @type {{IMessageHandlerMap}}
+        */
     let MessageHandlers: IMessageHandlerMap;
     export default MessageHandlers;
 }
 
 declare module '__decorum/field-options' {
     import BaseValidator from '__decorum/validators/base-validator';
+    /**
+        * Validation options for a given field including actual validators and meta data such as the field name.
+        */
     export default class FieldOptions {
-        getFieldName(): string;
-        setFieldName(name: string): void;
-        addValidator(validator: BaseValidator): void;
-        getValidators(): BaseValidator[];
-        validateValue(value: any, model: any): string[];
+            /**
+                * Gets the "friendly" name of the field for use in validation error messages. Defaults to just "Field".
+                * @returns {string}
+                */
+            getFieldName(): string;
+            /**
+                * Sets the "friendly" name of the field for use in validation error messages. This name will be used in the text
+                * of validation errors.
+                * @param name The new name to set.
+                */
+            setFieldName(name: string): void;
+            /**
+                * Add a validator to the list of validators for this field.
+                * @param validator The validator to add. Should be a class that extends from {BaseValidator}.
+                */
+            addValidator(validator: BaseValidator): void;
+            /**
+                * Gets the validators assigned to this field.
+                * @returns {BaseValidator[]} The validators for this field.
+                */
+            getValidators(): BaseValidator[];
+            /**
+                * Runs through all of the validators for the field given a particular value and returns any validation errors that
+                * may have occurred.
+                * @param value The value to validate.
+                * @param model The rest of the model. Used in custom cross-field validations.
+                * @returns {string[]} Any validation errors that may have occurred or an empty array if the value passed is valid
+                * for the field.
+                */
+            validateValue(value: any, model: any): string[];
     }
 }
 
 declare module '__decorum/validators/base-validator' {
+    /**
+        * Base abstract class for all validators. Methods that must be overridden:
+        *  getMessage(...) - Get error message to return when field is invalid.
+        *  isValid(...)    - Check validity of field given proposed value and the rest of the model.
+        */
     abstract class BaseValidator {
-        constructor(validatorKey: string, message: string);
-        hasCustomMessage: boolean;
-        validatesEmptyValue(): boolean;
-        getCustomMessage(): string;
-        getKey(): string;
-        abstract getMessage(fieldName: string, fieldValue: any): string;
-        abstract isValid(value: any, model: any): boolean;
+            /**
+                * Initializes the {BaseValidator}
+                * @param validatorKey A unique "key" by which to identify this field validator i.e. length, maxlength, required.
+                * Should be a valid JS property name.
+                * @param message A custom error message to return. Should be passed down from concrete class' constructors to enable
+                * customizing error messages.
+                */
+            constructor(validatorKey: string, message: string);
+            /**
+                * Returns true if the validator instance was passed a custom error message.
+                */
+            hasCustomMessage: boolean;
+            /**
+                * Check whether this validator should process an "empty" value (i.e. null, undefined, empty string). Override
+                * this in derived classes to skip validators if the field value hasn't been set. Things like email, min/max length,
+                * and pattern should return false for this to ensure they don't get fired when the model is initially empty
+                * before a user has had a chance to input a value. Things like required should override this to true so that
+                * they are fired for empty values. Base implementation defaults to false
+                * @returns {boolean}
+                */
+            validatesEmptyValue(): boolean;
+            /**
+                * Gets the custom error message set on this validator.
+                * @returns {string} The custom error message or null if none has been set.
+                */
+            getCustomMessage(): string;
+            /**
+                * Gets the unique name for this validator.
+                * @returns {string} The unique name for this validator.
+                */
+            getKey(): string;
+            /**
+                * [Abstract] Gets the error message to display when a field fails validation by this validator.
+                * @param fieldName  The "friendly" name set for the field.
+                * @param fieldValue The field's current value.
+                */
+            abstract getMessage(fieldName: string, fieldValue: any): string;
+            /**
+                * [Abstract] Checks the passed value for validity.
+                * @param value The field's proposed value.
+                * @param model The rest of the model if cross-field validity checks are necessary.
+                */
+            abstract isValid(value: any, model: any): boolean;
     }
     export default BaseValidator;
 }
