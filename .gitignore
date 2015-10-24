@@ -9,6 +9,8 @@ node_modules
 /coverage
 
 # TypeScript compiled files
+/samples/typescript/**/*.js
+/samples/typescript/**/*.js.map
 /src/**/*.js
 /src/**/*.js.map
 /tests/**/*.js

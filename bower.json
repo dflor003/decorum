@@ -29,6 +29,7 @@
   ],
   "license": "MIT",
   "ignore": [
+    "samples",
     "node_modules",
     "bower_components",
     "coverage",
