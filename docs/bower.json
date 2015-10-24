@@ -1,0 +1,17 @@
+{
+  "name": "DecorumDocs",
+  "homepage": "https://github.com/dflor003/decorum",
+  "authors": [
+    "DanilF <dflor003@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "angular": "~1.4.7",
+    "angular-route": "~1.4.7",
+    "bootstrap": "~3.3.5"
+  }
+}
