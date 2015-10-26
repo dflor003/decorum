@@ -1,5 +1,6 @@
 import EmailValidator from '../validators/email';
 import ValidationManager from '../validation-manager';
+import Validator from '../validator';
 
 /**
  * Validate's that the field is a valid email address. The format used is the same as the webkit browser's internal
@@ -9,7 +10,6 @@ import ValidationManager from '../validation-manager';
  */
 export default function Email(message?: string): PropertyDecorator {
     return function (targetClass: Object, property: string): void {
-        let manager = ValidationManager.get(targetClass);
-        manager.addValidator(property, new EmailValidator(message));
+        Validator.addValidator(targetClass, property, new EmailValidator(message));
     };
 }

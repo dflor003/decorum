@@ -1,4 +1,5 @@
 import ValidationManager from '../validation-manager';
+import Validator from '../validator';
 
 /**
  * Sets the field's "friendly" name in validation error messages.

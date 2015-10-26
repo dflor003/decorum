@@ -1,4 +1,4 @@
-Decorum [![Build Status](https://travis-ci.org/dflor003/decorum.svg?branch=master)](https://travis-ci.org/dflor003/decorum) [![Coverage Status](https://coveralls.io/repos/dflor003/decorum/badge.svg?branch=master&service=github)](https://coveralls.io/github/dflor003/decorum?branch=master)
+Decorum [![Build Status](https://travis-ci.org/dflor003/decorum.svg?branch=master)](https://travis-ci.org/dflor003/decorum) [![Coverage Status](https://coveralls.io/repos/dflor003/decorum/badge.svg?branch=master&service=github)](https://coveralls.io/github/dflor003/decorum?branch=master) [![TypeScript definitions on DefinitelyTyped](http://definitelytyped.org/badges/standard.svg)](http://definitelytyped.org)
 =========
 
 > *A "proper" ECMAScript 7 Decorator-Based Validation Library*

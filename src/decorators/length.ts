@@ -1,5 +1,6 @@
 import ValidationManager from '../validation-manager';
 import LengthValidator from '../validators/length';
+import Validator from '../validator';
 
 /**
  * Validate's a field's EXACT length. Validation fails if the field is not EXACTLY the length passed.
@@ -9,7 +10,6 @@ import LengthValidator from '../validators/length';
  */
 export default function Length(length: number, message?: string): PropertyDecorator {
     return function (targetClass: Object, property: string): void {
-        let manager = ValidationManager.get(targetClass);
-        manager.addValidator(property, new LengthValidator(length, message));
+        Validator.addValidator(targetClass, property, new LengthValidator(length, message));
     };
 }

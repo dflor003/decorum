@@ -51,7 +51,7 @@ export default class FieldOptions {
     validateValue(value: any, model: any): string[] {
         let errors: string[] = [],
             fieldName = this.fieldName,
-            isEmpty = !value;
+            isEmpty = typeof value === 'undefined' || value === null || (typeof value === 'string' && !value);
 
         for (let i = 0; i < this.validators.length; i++) {
             let validator = this.validators[i];

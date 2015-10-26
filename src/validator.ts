@@ -1,5 +1,7 @@
 import ModelValidator from './model-validator';
 import {IValidationResult} from './model-validator';
+import BaseValidator from './validators/base-validator';
+import ValidationManager from './validation-manager';
 
 /**
  * A map from field name to array of field validation decorators.
@@ -61,5 +63,17 @@ export default class Validator {
      */
     static validate(model: any): IValidationResult {
         return new ModelValidator(model).validate();
+    }
+
+    /**
+     * Adds a validator to the given object prototype for the given property. Meant to be used inside of validation
+     * decorators to inject the validation onto the object property.
+     * @param targetPrototype A valid object prototype to add to.
+     * @param property The property to add the validator for.
+     * @param validator The validator to add.
+     */
+    static addValidator(targetPrototype: Object, property: string, validator: BaseValidator): void {
+        let manager = ValidationManager.get(targetPrototype);
+        manager.addValidator(property, validator);
     }
 }

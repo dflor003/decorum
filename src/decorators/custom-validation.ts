@@ -1,5 +1,6 @@
 import ValidationManager from '../validation-manager';
 import CustomValidator from '../validators/custom';
+import Validator from '../validator';
 
 /**
  * A generic custom validation. Takes a predicate that will receive the proposed value as the first parameter and the
@@ -11,7 +12,6 @@ import CustomValidator from '../validators/custom';
  */
 export default function Validation<TModel>(message: string, predicate: (value: any, model: TModel) => boolean): PropertyDecorator {
     return function (targetClass: Object, property: string): void {
-        let manager = ValidationManager.get(targetClass);
-        manager.addValidator(property, new CustomValidator(predicate, message));
+        Validator.addValidator(targetClass, property, new CustomValidator(predicate, message));
     };
 }
