@@ -10,7 +10,7 @@ import {MessageHandler} from '../messages';
  * field will be considered invalid and will return the passed error message upon validation.
  * @returns {function(Object, string): void} A field validation decorator.
  */
-export default function Validation<TModel>(message: string|MessageHandler, predicate: (value: any, model: TModel) => boolean): PropertyDecorator {
+export default function Validation<TModel>(message: string|MessageHandler<CustomValidator<TModel>>, predicate: (value: any, model: TModel) => boolean): PropertyDecorator {
     return function (targetClass: Object, property: string): void {
         Validator.addValidator(targetClass, property, new CustomValidator(predicate, message));
     };

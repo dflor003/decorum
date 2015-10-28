@@ -1,18 +1,24 @@
 import BaseValidator from './validators/base-validator';
+import {IMessageOpts} from './messages';
 
 /**
  * Validation options for a given field including actual validators and meta data such as the field name.
  */
 export default class FieldOptions {
-    private fieldName: string = 'Field';
+    private property: string;
+    private friendlyName: string = 'Field';
     private validators: BaseValidator[] = [];
+
+    constructor(property: string) {
+        this.property = property;
+    }
 
     /**
      * Gets the "friendly" name of the field for use in validation error messages. Defaults to just "Field".
      * @returns {string}
      */
-    getFieldName(): string {
-        return this.fieldName;
+    getFriendlyName(): string {
+        return this.friendlyName;
     }
 
     /**
@@ -20,8 +26,8 @@ export default class FieldOptions {
      * of validation errors.
      * @param name The new name to set.
      */
-    setFieldName(name: string): void {
-        this.fieldName = name;
+    setFriendlyName(name: string): void {
+        this.friendlyName = name;
     }
 
     /**
@@ -50,8 +56,12 @@ export default class FieldOptions {
      */
     validateValue(value: any, model: any): string[] {
         let errors: string[] = [],
-            fieldName = this.fieldName,
-            isEmpty = typeof value === 'undefined' || value === null || (typeof value === 'string' && !value);
+            isEmpty = typeof value === 'undefined' || value === null || (typeof value === 'string' && !value),
+            msgOpts: IMessageOpts = {
+                property: this.property,
+                friendlyName: this.friendlyName,
+                value: value
+            };
 
         for (let i = 0; i < this.validators.length; i++) {
             let validator = this.validators[i];
@@ -62,8 +72,8 @@ export default class FieldOptions {
 
             if (!validator.isValid(value, model)) {
                 let message = validator.hasCustomMessage
-                    ? validator.getCustomMessage(fieldName, value)
-                    : validator.getMessage(fieldName, value);
+                    ? validator.getCustomMessage(msgOpts)
+                    : validator.getMessage(msgOpts);
                 errors.push(message);
             }
         }

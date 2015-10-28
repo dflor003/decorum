@@ -1,18 +1,19 @@
 import BaseValidator from './base-validator';
 import MessageHandlerMap from '../messages';
 import {MessageHandler} from '../messages';
+import {IMessageOpts} from '../messages';
 
 MessageHandlerMap['length'] =
-    (fieldName: string, fieldValue: any, length: number) =>
-        `${fieldName} must be ${length} characters long.`;
+    (opts: IMessageOpts, validator: LengthValidator) =>
+        `${opts.friendlyName} must be ${validator.length} characters long.`;
 
 /**
  * An exact length validator.
  */
 export default class LengthValidator extends BaseValidator {
-    private length: number;
+    length: number;
 
-    constructor(length: number, message?: string|MessageHandler) {
+    constructor(length: number, message?: string|MessageHandler<LengthValidator>) {
         super('length', message);
 
         if (typeof length !== 'number' || length <= 0) {
@@ -22,8 +23,8 @@ export default class LengthValidator extends BaseValidator {
         this.length = length;
     }
 
-    getMessage(fieldName: string, fieldValue: any): string {
-        return MessageHandlerMap['length'](fieldName,  fieldValue, this.length);
+    getMessage(opts: IMessageOpts): string {
+        return MessageHandlerMap['length'](opts, this);
     }
 
     isValid(value: any): boolean {

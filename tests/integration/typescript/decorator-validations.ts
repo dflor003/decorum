@@ -9,6 +9,7 @@ import {Alpha} from '../../../src/main';
 import {AlphaNumeric} from '../../../src/main';
 import {Validator} from '../../../src/main';
 import {ModelValidator} from '../../../src/main';
+import {IMessageOpts} from '../../../src/messages';
 
 'use strict';
 
@@ -41,7 +42,7 @@ describe('TypeScript Decorator-based validations', () => {
         alphaField = '';
 
         @FieldName('Alpha numeric field')
-        @AlphaNumeric(field => `${field} should contain letters and numbers only`)
+        @AlphaNumeric((opts: IMessageOpts) => `${opts.friendlyName} is not alphanumeric!`)
         alphaNumericField = '';
 
         private _myProp: string;
@@ -372,7 +373,7 @@ describe('TypeScript Decorator-based validations', () => {
 
                     // Assert
                     expect(errors.length).toBe(1);
-                    expect(errors[0]).toBe('Alpha numeric field must only contain alphanumeric characters');
+                    expect(errors[0]).toBe('Alpha numeric field is not alphanumeric!');
                 });
             });
 

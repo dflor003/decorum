@@ -1,16 +1,17 @@
 import BaseValidator from './base-validator';
 import MessageHandlerMap from '../messages';
 import {MessageHandler} from '../messages';
+import {IMessageOpts} from '../messages';
 
 MessageHandlerMap['required'] =
-    (fieldName: string, fieldValue: any) =>
-        `${fieldName} is required`;
+    (opts: IMessageOpts) =>
+        `${opts.friendlyName} is required`;
 
 /**
  * A field requiredness validator.
  */
 export default class RequiredFieldValidator extends BaseValidator {
-    constructor(message?: string|MessageHandler) {
+    constructor(message?: string|MessageHandler<RequiredFieldValidator>) {
         super('required', message);
     }
 
@@ -18,8 +19,8 @@ export default class RequiredFieldValidator extends BaseValidator {
         return true;
     }
 
-    getMessage(fieldName: string, fieldValue: any): string {
-        return MessageHandlerMap['required'](fieldName, fieldValue);
+    getMessage(opts: IMessageOpts): string {
+        return MessageHandlerMap['required'](opts, this);
     }
 
     isValid(value: any): boolean {

@@ -1,24 +1,25 @@
 import BaseValidator from './base-validator';
 import MessageHandlerMap from '../messages';
 import {MessageHandler} from '../messages';
+import {IMessageOpts} from '../messages';
 
 MessageHandlerMap['pattern'] =
-    (fieldName: string, fieldValue: any, regex: RegExp) =>
-        `${fieldName} is not valid`;
+    (opts: IMessageOpts) =>
+        `${opts.friendlyName} is not valid`;
 
 /**
  * A regular expression validator.
  */
 export default class PatternValidator extends BaseValidator {
-    private pattern: RegExp;
+    pattern: RegExp;
 
-    constructor(pattern: RegExp, message?: string|MessageHandler) {
+    constructor(pattern: RegExp, message?: string|MessageHandler<PatternValidator>) {
         super('pattern', message);
         this.pattern = pattern;
     }
 
-    getMessage(fieldName: string, fieldValue: any): string {
-        return MessageHandlerMap['pattern'](fieldName, fieldValue, this.pattern);
+    getMessage(opts: IMessageOpts): string {
+        return MessageHandlerMap['pattern'](opts, this);
     }
 
     isValid(value: any): boolean {

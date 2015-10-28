@@ -1,18 +1,19 @@
 import BaseValidator from './base-validator';
 import MessageHandlerMap from '../messages';
 import {MessageHandler} from '../messages';
+import {IMessageOpts} from "../messages";
 
 MessageHandlerMap['minlength'] =
-    (fieldName: string, fieldValue: any, minLength: number) =>
-        `${fieldName} must be at least ${minLength} characters long`;
+    (opts: IMessageOpts, validator: MinLengthValidator) =>
+        `${opts.friendlyName} must be at least ${validator.minLength} characters long`;
 
 /**
  * A minimum length validator.
  */
 export default class MinLengthValidator extends BaseValidator {
-    private minLength: number;
+    minLength: number;
 
-    constructor(minLength: number, message?: string|MessageHandler) {
+    constructor(minLength: number, message?: string|MessageHandler<MinLengthValidator>) {
         super('minlength', message);
 
         if (typeof minLength !== 'number' || minLength <= 0) {
@@ -22,8 +23,8 @@ export default class MinLengthValidator extends BaseValidator {
         this.minLength = minLength;
     }
 
-    getMessage(fieldName: string, fieldValue: any): string {
-        return MessageHandlerMap['minlength'](fieldName,  fieldValue, this.minLength);
+    getMessage(opts: IMessageOpts): string {
+        return MessageHandlerMap['minlength'](opts, this);
     }
 
     isValid(value: string): boolean {

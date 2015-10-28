@@ -8,7 +8,7 @@ import {MessageHandler} from '../messages';
  * @param message [Optional] Overrides the default validation error message.
  * @returns {function(Object, string): void} A field validation decorator.
  */
-export default function Email(message?: string|MessageHandler): PropertyDecorator {
+export default function Email(message?: string|MessageHandler<EmailValidator>): PropertyDecorator {
     return function (targetClass: Object, property: string): void {
         Validator.addValidator(targetClass, property, new EmailValidator(message));
     };

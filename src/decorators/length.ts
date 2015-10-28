@@ -8,7 +8,7 @@ import {MessageHandler} from '../messages';
  * @param message [Optional] Overrides the default validation error message.
  * @returns {function(Object, string): void} A field validation decorator.
  */
-export default function Length(length: number, message?: string|MessageHandler): PropertyDecorator {
+export default function Length(length: number, message?: string|MessageHandler<LengthValidator>): PropertyDecorator {
     return function (targetClass: Object, property: string): void {
         Validator.addValidator(targetClass, property, new LengthValidator(length, message));
     };

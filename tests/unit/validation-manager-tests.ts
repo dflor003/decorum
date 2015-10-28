@@ -44,7 +44,7 @@ describe('ValidationManager', () => {
         });
     });
 
-    describe('setFieldName', () => {
+    describe('setFriendlyName', () => {
         it('should set the field name', () => {
             // Arrange
             let manager = ValidationManager.get(myClass.prototype);
@@ -54,7 +54,7 @@ describe('ValidationManager', () => {
 
             // Assert
             let opts = manager.getFieldOptions('foo');
-            expect(opts.getFieldName()).toBe('The Foo Fighters');
+            expect(opts.getFriendlyName()).toBe('The Foo Fighters');
         });
     });
 

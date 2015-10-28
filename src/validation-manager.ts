@@ -30,7 +30,7 @@ export default class ValidationManager {
      * @param newName The name to set.
      */
     setFieldName(property: string, newName: string): void {
-        this.getFieldOptions(property).setFieldName(newName);
+        this.getFieldOptions(property).setFriendlyName(newName);
     }
 
     /**
@@ -56,6 +56,6 @@ export default class ValidationManager {
      * @returns {FieldOptions} An object containing the validators and other options assigned to this field.
      */
     getFieldOptions(property: string): FieldOptions {
-        return this.fieldValidations[property] || (this.fieldValidations[property] = new FieldOptions());
+        return this.fieldValidations[property] || (this.fieldValidations[property] = new FieldOptions(property));
     }
 }

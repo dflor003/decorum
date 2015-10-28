@@ -1,4 +1,5 @@
 import {MessageHandler} from '../messages';
+import {IMessageOpts} from '../messages';
 
 /**
  * Base abstract class for all validators. Methods that must be overridden:
@@ -8,7 +9,7 @@ import {MessageHandler} from '../messages';
 abstract class BaseValidator {
     private static KeyRegex = /^[a-z0-9_-]+$/i;
     private validatorKey: string;
-    private message: string|MessageHandler;
+    private message: string|MessageHandler<any>;
 
     /**
      * Initializes the {BaseValidator}
@@ -17,7 +18,7 @@ abstract class BaseValidator {
      * @param message A custom error message to return. Should be passed down from concrete class' constructors to enable
      * customizing error messages.
      */
-    constructor(validatorKey: string, message: string|MessageHandler) {
+    constructor(validatorKey: string, message: string|MessageHandler<any>) {
         if (!validatorKey) {
             throw new Error('Must pass validator key.');
         }
@@ -50,12 +51,12 @@ abstract class BaseValidator {
 
     /**
      * Gets the custom error message set on this validator.
+     * @param opts Metadata about the field such as name and friendly name.
      * @returns {string} The custom error message or null if none has been set.
      */
-    getCustomMessage(fieldName: string, fieldValue: any): string {
-        if (typeof this.message === 'function')
-        {
-            return (<MessageHandler>this.message)(fieldName, fieldValue);
+    getCustomMessage(opts: IMessageOpts): string {
+        if (typeof this.message === 'function') {
+            return (<MessageHandler<any>>this.message)(opts, this);
         }
 
         return <string>this.message;
@@ -71,10 +72,9 @@ abstract class BaseValidator {
 
     /**
      * [Abstract] Gets the error message to display when a field fails validation by this validator.
-     * @param fieldName  The "friendly" name set for the field.
-     * @param fieldValue The field's current value.
+     * @param opts Metadata about the field such as name and friendly name.
      */
-    abstract getMessage(fieldName: string, fieldValue: any): string;
+    abstract getMessage(opts: IMessageOpts): string;
 
     /**
      * [Abstract] Checks the passed value for validity.

@@ -120,7 +120,7 @@ export default class ModelValidator {
                     result.isValid = false;
                     result.errors.push(<IFieldValidationError>{
                         field: fieldKey,
-                        fieldName: this.getValidationOptions(fieldKey).getFieldName(),
+                        fieldName: this.getValidationOptions(fieldKey).getFriendlyName(),
                         errors: errors
                     });
                 }
