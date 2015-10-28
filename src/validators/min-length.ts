@@ -1,5 +1,6 @@
 import BaseValidator from './base-validator';
 import MessageHandlerMap from '../messages';
+import {MessageHandler} from '../messages';
 
 MessageHandlerMap['minlength'] =
     (fieldName: string, fieldValue: any, minLength: number) =>
@@ -11,7 +12,7 @@ MessageHandlerMap['minlength'] =
 export default class MinLengthValidator extends BaseValidator {
     private minLength: number;
 
-    constructor(minLength: number, message?: string) {
+    constructor(minLength: number, message?: string|MessageHandler) {
         super('minlength', message);
 
         if (typeof minLength !== 'number' || minLength <= 0) {

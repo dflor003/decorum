@@ -5,6 +5,8 @@ import {MaxLength} from '../../../src/main';
 import {FieldName} from '../../../src/main';
 import {Validation} from '../../../src/main';
 import {Pattern} from '../../../src/main';
+import {Alpha} from '../../../src/main';
+import {AlphaNumeric} from '../../../src/main';
 import {Validator} from '../../../src/main';
 import {ModelValidator} from '../../../src/main';
 
@@ -34,6 +36,13 @@ describe('TypeScript Decorator-based validations', () => {
 
         @Pattern(/^[a-z0-9-]+$/, 'Must be a valid slug tag')
         slug = '';
+
+        @Alpha()
+        alphaField = '';
+
+        @FieldName('Alpha numeric field')
+        @AlphaNumeric(field => `${field} should contain letters and numbers only`)
+        alphaNumericField = '';
 
         private _myProp: string;
 
@@ -316,6 +325,64 @@ describe('TypeScript Decorator-based validations', () => {
 
                     // Act
                     let errors = validator.validateField('slug');
+
+                    // Assert
+                    expect(errors.length).toBe(0);
+                });
+            });
+        });
+
+        describe('When @Alpha decorator on field', () => {
+            describe('And value contains non-alpha characters', () => {
+                it('Should return an error', () => {
+                    // Arrange
+                    model.alphaField = 'foAo!';
+
+                    // Act
+                    let errors = validator.validateField('alphaField');
+
+                    // Assert
+                    expect(errors.length).toBe(1);
+                    expect(errors[0]).toBe('Field must only contain alphabetic characters');
+                });
+            });
+
+            describe('And value contains only alphabetic characters', () => {
+                it('Should not return an error', () => {
+                    // Arrange
+                    model.alphaField = 'ABCabc';
+
+                    // Act
+                    let errors = validator.validateField('alphaField');
+
+                    // Assert
+                    expect(errors.length).toBe(0);
+                });
+            });
+        });
+
+        describe('When @AlphaNumeric decorator on field', () => {
+            describe('And value contains non-alphanumeric characters', () => {
+                it('Should return an error', () => {
+                    // Arrange
+                    model.alphaNumericField = 'fooABC123-a';
+
+                    // Act
+                    let errors = validator.validateField('alphaNumericField');
+
+                    // Assert
+                    expect(errors.length).toBe(1);
+                    expect(errors[0]).toBe('Alpha numeric field must only contain alphanumeric characters');
+                });
+            });
+
+            describe('And value contains only alphabetic characters', () => {
+                it('Should not return an error', () => {
+                    // Arrange
+                    model.alphaNumericField = 'ABC123abc';
+
+                    // Act
+                    let errors = validator.validateField('alphaNumericField');
 
                     // Assert
                     expect(errors.length).toBe(0);

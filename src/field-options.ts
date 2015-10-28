@@ -62,7 +62,7 @@ export default class FieldOptions {
 
             if (!validator.isValid(value, model)) {
                 let message = validator.hasCustomMessage
-                    ? validator.getCustomMessage()
+                    ? validator.getCustomMessage(fieldName, value)
                     : validator.getMessage(fieldName, value);
                 errors.push(message);
             }

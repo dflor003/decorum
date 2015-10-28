@@ -1,3 +1,5 @@
+import {MessageHandler} from '../messages';
+
 /**
  * Base abstract class for all validators. Methods that must be overridden:
  *  getMessage(...) - Get error message to return when field is invalid.
@@ -6,7 +8,7 @@
 abstract class BaseValidator {
     private static KeyRegex = /^[a-z0-9_-]+$/i;
     private validatorKey: string;
-    private message: string;
+    private message: string|MessageHandler;
 
     /**
      * Initializes the {BaseValidator}
@@ -15,7 +17,7 @@ abstract class BaseValidator {
      * @param message A custom error message to return. Should be passed down from concrete class' constructors to enable
      * customizing error messages.
      */
-    constructor(validatorKey: string, message: string) {
+    constructor(validatorKey: string, message: string|MessageHandler) {
         if (!validatorKey) {
             throw new Error('Must pass validator key.');
         }
@@ -50,8 +52,13 @@ abstract class BaseValidator {
      * Gets the custom error message set on this validator.
      * @returns {string} The custom error message or null if none has been set.
      */
-    getCustomMessage(): string {
-        return this.message;
+    getCustomMessage(fieldName: string, fieldValue: any): string {
+        if (typeof this.message === 'function')
+        {
+            return (<MessageHandler>this.message)(fieldName, fieldValue);
+        }
+
+        return <string>this.message;
     }
 
     /**

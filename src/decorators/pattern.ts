@@ -1,6 +1,6 @@
-import ValidationManager from '../validation-manager';
 import PatternValidator from '../validators/pattern';
 import Validator from '../validator';
+import {MessageHandler} from '../messages';
 
 /**
  * Validates the field against a regular expression pattern.
@@ -8,7 +8,7 @@ import Validator from '../validator';
  * @param message [Optional] Overrides the default validation error message.
  * @returns {function(Object, string): void} A field validation decorator.
  */
-export default function Pattern(regex: RegExp, message?: string): PropertyDecorator {
+export default function Pattern(regex: RegExp, message?: string|MessageHandler): PropertyDecorator {
     return function (targetClass: Object, property: string): void {
         Validator.addValidator(targetClass, property, new PatternValidator(regex,  message));
     };

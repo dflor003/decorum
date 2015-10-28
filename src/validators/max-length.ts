@@ -1,5 +1,6 @@
 import BaseValidator from './base-validator';
 import MessageHandlerMap from '../messages';
+import {MessageHandler} from '../messages';
 
 MessageHandlerMap['maxlength'] =
     (fieldName: string, fieldValue: any, maxLength: number) =>
@@ -11,7 +12,7 @@ MessageHandlerMap['maxlength'] =
 export default class MaxLengthValidator extends BaseValidator {
     private maxLength: number;
 
-    constructor(maxLength: number, message?: string) {
+    constructor(maxLength: number, message?: string|MessageHandler) {
         super('maxlength', message);
 
         if (typeof maxLength !== 'number' || maxLength <= 0) {

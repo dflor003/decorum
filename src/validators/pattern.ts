@@ -1,5 +1,6 @@
 import BaseValidator from './base-validator';
 import MessageHandlerMap from '../messages';
+import {MessageHandler} from '../messages';
 
 MessageHandlerMap['pattern'] =
     (fieldName: string, fieldValue: any, regex: RegExp) =>
@@ -11,7 +12,7 @@ MessageHandlerMap['pattern'] =
 export default class PatternValidator extends BaseValidator {
     private pattern: RegExp;
 
-    constructor(pattern: RegExp, message?: string) {
+    constructor(pattern: RegExp, message?: string|MessageHandler) {
         super('pattern', message);
         this.pattern = pattern;
     }
