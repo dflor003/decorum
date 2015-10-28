@@ -14,6 +14,9 @@ let path = require('path');
 let karma = require('karma');
 let runSequence = require('run-sequence');
 let coveralls = require('gulp-coveralls');
+let fs = require('fs');
+let replace = require('gulp-replace');
+let rename = require('gulp-rename');
 
 /* Tasks */
 gulp.task('default', (done) => {
@@ -112,8 +115,22 @@ gulp.task('typedef', () => {
             dts.bundle({
                 name: 'decorum',
                 main: './build/dts/main.d.ts',
-                out: '../../dist/decorum.d.ts'
+                out: '../../build/decorum_temp.d.ts'
             });
+
+            // Post-process .d.ts
+            //let typedef = fs.readFileSync('./dist/decorum.d.ts', 'utf8');
+            //let replacements = [
+            //    { pattern: }
+            //]
+            //typedef
+            //console.log(typedef);
+            gulp.src('./build/decorum_temp.d.ts')
+                .pipe(replace(/^\s*export\s*\{\s*default.*/gi, ''))
+                //.pipe(replace(/^\s*import.*$/gi, ''))
+                //.pipe(replace(/^\}.*$/gi, ''))
+                .pipe(rename('decorum.d.ts'))
+                .pipe(gulp.dest('./dist'));
         })
         .then(() => {
             log('Deleting temp declaration files...');
