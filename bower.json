@@ -1,6 +1,6 @@
 {
   "name": "decorum",
-  "version": "0.1.2-alpha",
+  "version": "0.2.0-alpha",
   "homepage": "https://github.com/dflor003/decorum",
   "authors": [
     "DanilF <dflor003@gmail.com>"
@@ -30,6 +30,7 @@
   "license": "MIT",
   "ignore": [
     "samples",
+    "build",
     "node_modules",
     "bower_components",
     "coverage",
