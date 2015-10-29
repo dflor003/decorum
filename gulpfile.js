@@ -17,6 +17,7 @@ let coveralls = require('gulp-coveralls');
 let fs = require('fs');
 let replace = require('gulp-replace');
 let rename = require('gulp-rename');
+let header = require('gulp-header');
 let config = require('./bower.json');
 
 /* Config */
@@ -92,7 +93,7 @@ gulp.task('publish', () => {
         sourceMapFileName = './dist/' + bundledFileName + '.map',
         globalNamespace = 'decorum';
 
-    return browserify({
+    let bundle = browserify({
             entries: './src/main.ts',
             debug: true,
             standalone: globalNamespace
@@ -102,6 +103,28 @@ gulp.task('publish', () => {
         .pipe(exorcist(sourceMapFileName))
         .pipe(source(bundledFileName))
         .pipe(gulp.dest('./dist'));
+
+    let banner = `
+/*!
+ * ${config.name} - ${config.version}
+ *
+ * ${config.description}
+ *
+ * Copyright 2015 Danil Flores
+ *
+ * @version v${config.version}
+ * @link ${config.homepage}
+ * @license ${config.license}
+ */
+`;
+
+    return asPromise(bundle)
+        .then((x) => {
+            return gulp.src('./dist/' + bundledFileName)
+                .pipe(header(banner.trim() + '\n\n'))
+                .pipe(gulp.dest('./dist'));
+        })
+        .catch(err => error(err));
 });
 
 gulp.task('typedef', () => {
