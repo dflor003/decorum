@@ -6,7 +6,7 @@
     "DanilF <dflor003@gmail.com>"
   ],
   "description": "ES7 decorator-based validation framework.",
-  "main": "/dist/decorator-validations.js",
+  "main": "/dist/decorum.js",
   "moduleType": [
     "amd",
     "es6",
@@ -14,6 +14,8 @@
     "node"
   ],
   "keywords": [
+    "decorum",
+    "decorumjs",
     "validation",
     "validations",
     "validator",
@@ -23,7 +25,6 @@
     "es2016",
     "typescript",
     "ts",
-    "decorum",
     "library",
     "babel"
   ],
