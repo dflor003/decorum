@@ -1,4 +1,5 @@
 import LengthValidator from '../../../src/validators/length';
+import {expect} from 'chai';
 
 describe('Length validator', () => {
     let validator: LengthValidator = null;
@@ -12,7 +13,7 @@ describe('Length validator', () => {
                 let valid = validator.isValid('1234567');
 
                 // Assert
-                expect(valid).toBe(false);
+                expect(valid).to.equal(false);
             });
         });
 
@@ -22,7 +23,7 @@ describe('Length validator', () => {
                 let valid = validator.isValid('12345');
 
                 // Assert
-                expect(valid).toBe(true);
+                expect(valid).to.equal(true);
             });
         });
     });

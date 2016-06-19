@@ -1,4 +1,5 @@
 import PatternValidator from '../../../src/validators/pattern';
+import {expect} from 'chai';
 
 describe('Pattern validator', () => {
     let validator: PatternValidator = null;
@@ -12,7 +13,7 @@ describe('Pattern validator', () => {
                 let valid = validator.isValid('123A4');
 
                 // Assert
-                expect(valid).toBe(false);
+                expect(valid).to.equal(false);
             });
         });
 
@@ -22,7 +23,7 @@ describe('Pattern validator', () => {
                 let valid = validator.isValid('42');
 
                 // Assert
-                expect(valid).toBe(true);
+                expect(valid).to.equal(true);
             });
         });
     });

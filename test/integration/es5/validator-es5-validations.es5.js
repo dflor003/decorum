@@ -1,13 +1,13 @@
-import {Required} from '../../../src/main';
-import {Email} from '../../../src/main';
-import {MinLength} from '../../../src/main';
-import {Length} from '../../../src/main';
-import {FieldName} from '../../../src/main';
-import {Validation} from '../../../src/main';
-import {Pattern} from '../../../src/main';
-import {Validator} from '../../../src/main';
-
-'use strict';
+const decorum = require('../../../src');
+const Required = decorum.Required;
+const Email = decorum.Email;
+const MinLength = decorum.MinLength;
+const Length = decorum.Length;
+const FieldName = decorum.FieldName;
+const Validation = decorum.Validation;
+const Pattern = decorum.Pattern;
+const Validator = decorum.Validator;
+const expect = require('chai').expect;
 
 describe('ES5 Validations', () => {
     var Employee = function () {
@@ -47,14 +47,14 @@ describe('ES5 Validations', () => {
                 let results = Validator.validate(model);
 
                 // Assert
-                expect(results.isValid).toBe(false);
-                expect(results.errors.length).toBe(2);
-                expect(results.errors[0].field).toBe('name');
-                expect(results.errors[0].errors.length).toBe(1);
-                expect(results.errors[0].errors[0]).toBe('Field must be at least 5 characters long');
-                expect(results.errors[1].field).toBe('ssn');
-                expect(results.errors[1].errors.length).toBe(1);
-                expect(results.errors[1].errors[0]).toBe('Can not be 999-99-9999');
+                expect(results.isValid).to.equal(false);
+                expect(results.errors.length).to.equal(2);
+                expect(results.errors[0].field).to.equal('name');
+                expect(results.errors[0].errors.length).to.equal(1);
+                expect(results.errors[0].errors[0]).to.equal('Field must be at least 5 characters long');
+                expect(results.errors[1].field).to.equal('ssn');
+                expect(results.errors[1].errors.length).to.equal(1);
+                expect(results.errors[1].errors[0]).to.equal('Can not be 999-99-9999');
             });
         });
     });

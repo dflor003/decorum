@@ -1,4 +1,5 @@
 import CustomValidator from '../../../src/validators/custom';
+import {expect} from 'chai';
 
 describe('Custom validator', () => {
     class MyModel {
@@ -23,7 +24,7 @@ describe('Custom validator', () => {
                 let valid = validator.isValid('999-99-9999', model);
 
                 // Assert
-                expect(valid).toBe(false);
+                expect(valid).to.equal(false);
             });
         });
 
@@ -36,7 +37,7 @@ describe('Custom validator', () => {
                 let valid = validator.isValid('foo', model);
 
                 // Assert
-                expect(valid).toBe(true);
+                expect(valid).to.equal(true);
             });
         });
     });

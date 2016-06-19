@@ -1,0 +1,12 @@
+{
+  "name": "decorum",
+  "version": false,
+  "dependencies": {},
+  "globalDevDependencies": {
+    "mocha": "registry:dt/mocha#2.2.5+20160317120654"
+  },
+  "devDependencies": {
+    "chai": "registry:npm/chai#3.5.0+20160415060238",
+    "sinon": "registry:npm/sinon#1.16.0+20160427193336"
+  }
+}

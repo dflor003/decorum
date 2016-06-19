@@ -13,18 +13,17 @@ node_modules
 /samples/typescript/**/*.js.map
 /src/**/*.js
 /src/**/*.js.map
-/tests/**/*.js
-/tests/**/*.js.map
-!/tests/**/*.es7.js
-!/tests/**/*.es6.js
-!/tests/**/*.es5.js
+/test/**/*.js
+/test/**/*.js.map
+!/test/**/*.es7.js
+!/test/**/*.es6.js
+!/test/**/*.es5.js
 
 # TypeScript library definitions
-/typings/**/*.d.ts
-!/typings/tsd.d.ts
+typings/
 
 # Generated Temp
-/build/temp
+/build/temp/
 
 # Doc dependencies
 /docs/lib

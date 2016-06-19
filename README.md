@@ -48,7 +48,15 @@ With **decorum**, addressing those concerns becomes quite simple and straight fo
 
 ## Supported Validations
 
-Coming soon!
+* Required
+* Alpha-only
+* Alpha-numeric
+* Email
+* Minimum/Maximum/Exact length
+* Custom validation functions
+* Regex
+
+More suggestions are welcome!
 
 ## Language Specifics
 

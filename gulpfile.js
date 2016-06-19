@@ -1,24 +1,23 @@
 'use strict';
 
-let browserify = require('browserify');
-let gulp = require('gulp');
-let source = require('vinyl-source-stream');
-let tsify = require("tsify");
-let exorcist = require('exorcist');
-let ts = require('gulp-typescript');
-let dts = require('dts-bundle');
-let Promise = require('bluebird');
-let gutil = require('gulp-util');
-let del = require('del');
-let path = require('path');
-let karma = require('karma');
-let runSequence = require('run-sequence');
-let coveralls = require('gulp-coveralls');
-let fs = require('fs');
-let replace = require('gulp-replace');
-let rename = require('gulp-rename');
-let header = require('gulp-header');
-let config = require('./bower.json');
+const browserify = require('browserify');
+const gulp = require('gulp');
+const source = require('vinyl-source-stream');
+const tsify = require("tsify");
+const exorcist = require('exorcist');
+const ts = require('gulp-typescript');
+const dts = require('dts-bundle');
+const gutil = require('gulp-util');
+const del = require('del');
+const path = require('path');
+const mocha = require('mocha');
+const runSequence = require('run-sequence');
+const coveralls = require('gulp-coveralls');
+const fs = require('fs');
+const replace = require('gulp-replace');
+const rename = require('gulp-rename');
+const header = require('gulp-header');
+const config = require('./bower.json');
 
 /* Config */
 let appVersion = config.version.replace('-alpha', '');

@@ -1,51 +1,66 @@
-import {Required} from '../../../src/main';
-import {Email} from '../../../src/main';
-import {MinLength} from '../../../src/main';
-import {MaxLength} from '../../../src/main';
-import {Length} from '../../../src/main';
-import {FieldName} from '../../../src/main';
-import {Validation} from '../../../src/main';
-import {Pattern} from '../../../src/main';
-import {Validator} from '../../../src/main';
+import {Required} from '../../../src/index';
+import {Email} from '../../../src/index';
+import {MinLength} from '../../../src/index';
+import {MaxLength} from '../../../src/index';
+import {FieldName} from '../../../src/index';
+import {Validation} from '../../../src/index';
+import {Pattern} from '../../../src/index';
+import {Alpha} from '../../../src/index';
+import {AlphaNumeric} from '../../../src/index';
+import {Validator} from '../../../src/index';
+import {ModelValidator} from '../../../src/index';
+import {IMessageOpts} from '../../../src/messages';
+import {expect} from 'chai';
 
-'use strict';
-
-describe('ES7 Decorator-based validations', () => {
+describe('TypeScript Decorator-based validations', () => {
     class RegistrationModel {
         @Required()
-        username = '';
+        username: string;
 
         @FieldName('Email address')
         @Required()
         @Email()
-        email = '';
+        email: string;
 
         @FieldName('Password')
         @MinLength(10)
         @MaxLength(30)
-        password = '';
+        password: string;
 
         @FieldName('Confirm password')
-        @Validation(
+        @Validation<RegistrationModel>(
             'Passwords must match',
             (value, model) => value === model.password
         )
-        confirmPassword = '';
+        confirmPassword: string;
 
         @Pattern(/^[a-z0-9-]+$/, 'Must be a valid slug tag')
         slug = '';
 
+        @Alpha()
+        alphaField = '';
+
+        @FieldName('Alpha numeric field')
+        @AlphaNumeric((opts: IMessageOpts) => `${opts.friendlyName} is not alphanumeric!`)
+        alphaNumericField = '';
+
+        private _myProp: string;
+
         constructor() {
             this.myProperty = 'foo';
+            this.username = '';
+            this.email = '';
+            this.password = '';
+            this.confirmPassword = '';
         }
 
         @MaxLength(3)
-        get myProperty() { return this._myProp; }
-        set myProperty(value) { this._myProp = value; }
+        get myProperty(): string { return this._myProp; }
+        set myProperty(value: string) { this._myProp = value; }
     }
 
-    var model = null;
-    var validator = null;
+    let model: RegistrationModel = null;
+    let validator: ModelValidator = null;
 
     beforeEach(() => {
         model = new RegistrationModel();
@@ -62,7 +77,7 @@ describe('ES7 Decorator-based validations', () => {
                 let errors = validator.validateField('username');
 
                 // Assert
-                expect(errors.length).toBe(0);
+                expect(errors.length).to.equal(0);
             });
         });
 
@@ -75,8 +90,8 @@ describe('ES7 Decorator-based validations', () => {
                 let errors = validator.validateField('username');
 
                 // Assert
-                expect(errors.length).toBe(1);
-                expect(errors[0]).toBe('Field is required');
+                expect(errors.length).to.equal(1);
+                expect(errors[0]).to.equal('Field is required');
             });
         });
 
@@ -89,8 +104,8 @@ describe('ES7 Decorator-based validations', () => {
                 let errors = validator.validateField('email');
 
                 // Assert
-                expect(errors.length).toBe(1);
-                expect(errors[0]).toBe('Email address is required');
+                expect(errors.length).to.equal(1);
+                expect(errors[0]).to.equal('Email address is required');
             });
         });
 
@@ -103,8 +118,8 @@ describe('ES7 Decorator-based validations', () => {
                 let errors = validator.validateField('myProperty');
 
                 // Assert
-                expect(errors.length).toBe(1);
-                expect(errors[0]).toBe('Field can not exceed 3 characters in length');
+                expect(errors.length).to.equal(1);
+                expect(errors[0]).to.equal('Field can not exceed 3 characters in length');
             });
         });
     });
@@ -122,17 +137,17 @@ describe('ES7 Decorator-based validations', () => {
                 let results = validator.validate();
 
                 // Assert
-                expect(results).toBeDefined();
-                expect(results.isValid).toBe(false);
+                expect(results).to.exist;
+                expect(results.isValid).to.equal(false);
 
                 let errors = results.errors;
-                expect(errors.length).toBe(3);
-                expect(errors[0].field).toBe('email');
-                expect(errors[0].errors[0]).toBe('Email address is not a valid email address');
-                expect(errors[1].field).toBe('password');
-                expect(errors[1].errors[0]).toBe('Password must be at least 10 characters long');
-                expect(errors[2].field).toBe('confirmPassword');
-                expect(errors[2].errors[0]).toBe('Passwords must match');
+                expect(errors.length).to.equal(3);
+                expect(errors[0].field).to.equal('email');
+                expect(errors[0].errors[0]).to.equal('Email address is not a valid email address');
+                expect(errors[1].field).to.equal('password');
+                expect(errors[1].errors[0]).to.equal('Password must be at least 10 characters long');
+                expect(errors[2].field).to.equal('confirmPassword');
+                expect(errors[2].errors[0]).to.equal('Passwords must match');
             });
         });
     });
@@ -148,8 +163,8 @@ describe('ES7 Decorator-based validations', () => {
                     let errors = validator.validateField('email');
 
                     // Assert
-                    expect(errors.length).toBe(1);
-                    expect(errors[0]).toBe('Email address is not a valid email address');
+                    expect(errors.length).to.equal(1);
+                    expect(errors[0]).to.equal('Email address is not a valid email address');
                 });
             });
 
@@ -162,7 +177,7 @@ describe('ES7 Decorator-based validations', () => {
                     let errors = validator.validateField('email');
 
                     // Assert
-                    expect(errors.length).toBe(0);
+                    expect(errors.length).to.equal(0);
                 });
             });
         });
@@ -178,8 +193,8 @@ describe('ES7 Decorator-based validations', () => {
                     let errors = validator.validateField('confirmPassword');
 
                     // Assert
-                    expect(errors.length).toBe(1);
-                    expect(errors[0]).toBe('Passwords must match');
+                    expect(errors.length).to.equal(1);
+                    expect(errors[0]).to.equal('Passwords must match');
                 });
             });
 
@@ -193,7 +208,7 @@ describe('ES7 Decorator-based validations', () => {
                     let errors = validator.validateField('confirmPassword');
 
                     // Assert
-                    expect(errors.length).toBe(0);
+                    expect(errors.length).to.equal(0);
                 });
             });
         });
@@ -208,8 +223,8 @@ describe('ES7 Decorator-based validations', () => {
                     let errors = validator.validateField('password');
 
                     // Assert
-                    expect(errors.length).toBe(1);
-                    expect(errors[0]).toBe('Password must be at least 10 characters long');
+                    expect(errors.length).to.equal(1);
+                    expect(errors[0]).to.equal('Password must be at least 10 characters long');
                 });
             });
 
@@ -222,7 +237,7 @@ describe('ES7 Decorator-based validations', () => {
                     let errors = validator.validateField('password');
 
                     // Assert
-                    expect(errors.length).toBe(0);
+                    expect(errors.length).to.equal(0);
                 });
             });
         });
@@ -240,8 +255,8 @@ describe('ES7 Decorator-based validations', () => {
                     let errors = validator.validateField('password');
 
                     // Assert
-                    expect(errors.length).toBe(1);
-                    expect(errors[0]).toBe('Password can not exceed 30 characters in length');
+                    expect(errors.length).to.equal(1);
+                    expect(errors[0]).to.equal('Password can not exceed 30 characters in length');
                 });
             });
 
@@ -254,7 +269,7 @@ describe('ES7 Decorator-based validations', () => {
                     let errors = validator.validateField('password');
 
                     // Assert
-                    expect(errors.length).toBe(0);
+                    expect(errors.length).to.equal(0);
                 });
             });
         });
@@ -269,8 +284,8 @@ describe('ES7 Decorator-based validations', () => {
                     let errors = validator.validateField('email');
 
                     // Assert
-                    expect(errors.length).toBe(1);
-                    expect(errors[0]).toBe('Email address is not a valid email address');
+                    expect(errors.length).to.equal(1);
+                    expect(errors[0]).to.equal('Email address is not a valid email address');
                 });
             });
 
@@ -283,7 +298,7 @@ describe('ES7 Decorator-based validations', () => {
                     let errors = validator.validateField('email');
 
                     // Assert
-                    expect(errors.length).toBe(0);
+                    expect(errors.length).to.equal(0);
                 });
             });
         });
@@ -298,8 +313,8 @@ describe('ES7 Decorator-based validations', () => {
                     let errors = validator.validateField('slug');
 
                     // Assert
-                    expect(errors.length).toBe(1);
-                    expect(errors[0]).toBe('Must be a valid slug tag');
+                    expect(errors.length).to.equal(1);
+                    expect(errors[0]).to.equal('Must be a valid slug tag');
                 });
             });
 
@@ -312,7 +327,65 @@ describe('ES7 Decorator-based validations', () => {
                     let errors = validator.validateField('slug');
 
                     // Assert
-                    expect(errors.length).toBe(0);
+                    expect(errors.length).to.equal(0);
+                });
+            });
+        });
+
+        describe('When @Alpha decorator on field', () => {
+            describe('And value contains non-alpha characters', () => {
+                it('Should return an error', () => {
+                    // Arrange
+                    model.alphaField = 'foAo!';
+
+                    // Act
+                    let errors = validator.validateField('alphaField');
+
+                    // Assert
+                    expect(errors.length).to.equal(1);
+                    expect(errors[0]).to.equal('Field must only contain alphabetic characters');
+                });
+            });
+
+            describe('And value contains only alphabetic characters', () => {
+                it('Should not return an error', () => {
+                    // Arrange
+                    model.alphaField = 'ABCabc';
+
+                    // Act
+                    let errors = validator.validateField('alphaField');
+
+                    // Assert
+                    expect(errors.length).to.equal(0);
+                });
+            });
+        });
+
+        describe('When @AlphaNumeric decorator on field', () => {
+            describe('And value contains non-alphanumeric characters', () => {
+                it('Should return an error', () => {
+                    // Arrange
+                    model.alphaNumericField = 'fooABC123-a';
+
+                    // Act
+                    let errors = validator.validateField('alphaNumericField');
+
+                    // Assert
+                    expect(errors.length).to.equal(1);
+                    expect(errors[0]).to.equal('Alpha numeric field is not alphanumeric!');
+                });
+            });
+
+            describe('And value contains only alphabetic characters', () => {
+                it('Should not return an error', () => {
+                    // Arrange
+                    model.alphaNumericField = 'ABC123abc';
+
+                    // Act
+                    let errors = validator.validateField('alphaNumericField');
+
+                    // Assert
+                    expect(errors.length).to.equal(0);
                 });
             });
         });

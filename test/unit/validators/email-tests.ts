@@ -1,4 +1,5 @@
 import EmailValidator from '../../../src/validators/email';
+import {expect} from 'chai';
 
 describe('Email validator', () => {
     let validator: EmailValidator = null;
@@ -12,7 +13,7 @@ describe('Email validator', () => {
                 let valid = validator.isValid('foo@b.');
 
                 // Assert
-                expect(valid).toBe(false);
+                expect(valid).to.equal(false);
             });
         });
 
@@ -22,7 +23,7 @@ describe('Email validator', () => {
                 let valid = validator.isValid('bob@gmail.com');
 
                 // Assert
-                expect(valid).toBe(true);
+                expect(valid).to.equal(true);
             });
         });
     });

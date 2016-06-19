@@ -1,4 +1,5 @@
 import MinLengthValidator from '../../../src/validators/min-length';
+import {expect} from 'chai';
 
 describe('MinLength validator', () => {
     let validator: MinLengthValidator = null;
@@ -12,7 +13,7 @@ describe('MinLength validator', () => {
                 let valid = validator.isValid('12');
 
                 // Assert
-                expect(valid).toBe(false);
+                expect(valid).to.equal(false);
             });
         });
 
@@ -22,7 +23,7 @@ describe('MinLength validator', () => {
                 let valid = validator.isValid('123');
 
                 // Assert
-                expect(valid).toBe(true);
+                expect(valid).to.equal(true);
             });
         });
 
@@ -32,7 +33,7 @@ describe('MinLength validator', () => {
                 let valid = validator.isValid('1234');
 
                 // Assert
-                expect(valid).toBe(true);
+                expect(valid).to.equal(true);
             });
         });
     });

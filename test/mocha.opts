@@ -1,0 +1,3 @@
+--recursive
+--colors
+--compilers js:babel-register

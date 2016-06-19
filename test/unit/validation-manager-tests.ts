@@ -1,5 +1,6 @@
 import ValidationManager from '../../src/validation-manager';
 import RequiredFieldValidator from '../../src/validators/required';
+import {expect} from 'chai';
 
 describe('ValidationManager', () => {
     // Test data
@@ -15,14 +16,14 @@ describe('ValidationManager', () => {
         describe('when no existing manager on target class', () => {
             it('should create a new one', () => {
                 // Precondition
-                expect(myClass.prototype[ValidationManager.ValidationsKey]).toBeUndefined();
+                expect(myClass.prototype[ValidationManager.ValidationsKey]).to.be.undefined;
 
                 // Act
                 let manager = ValidationManager.get(myClass.prototype);
 
                 // Assert
-                expect(manager).toBeTruthy();
-                expect(myClass.prototype[ValidationManager.ValidationsKey]).toBe(manager);
+                expect(manager).to.exist;
+                expect(myClass.prototype[ValidationManager.ValidationsKey]).to.equal(manager);
             });
         });
 
@@ -32,14 +33,14 @@ describe('ValidationManager', () => {
                 ValidationManager.get(myClass.prototype);
 
                 // Precondition
-                expect(myClass.prototype[ValidationManager.ValidationsKey]).toBeDefined();
+                expect(myClass.prototype[ValidationManager.ValidationsKey]).to.exist;
 
                 // Act
                 let manager = ValidationManager.get(myClass.prototype);
 
                 // Assert
-                expect(manager).toBeTruthy();
-                expect(myClass.prototype[ValidationManager.ValidationsKey]).toBe(manager);
+                expect(manager).to.exist;
+                expect(myClass.prototype[ValidationManager.ValidationsKey]).to.equal(manager);
             });
         });
     });
@@ -54,7 +55,7 @@ describe('ValidationManager', () => {
 
             // Assert
             let opts = manager.getFieldOptions('foo');
-            expect(opts.getFriendlyName()).toBe('The Foo Fighters');
+            expect(opts.getFriendlyName()).to.equal('The Foo Fighters');
         });
     });
 
@@ -68,11 +69,11 @@ describe('ValidationManager', () => {
 
             // Assert
             let opts = manager.getFieldOptions('bar');
-            expect(opts).toBeDefined();
+            expect(opts).to.exist;
 
             let validators = opts.getValidators();
-            expect(validators.length).toBe(1);
-            expect(validators[0] instanceof RequiredFieldValidator).toBe(true);
+            expect(validators.length).to.equal(1);
+            expect(validators[0] instanceof RequiredFieldValidator).to.equal(true);
         });
     });
 });
